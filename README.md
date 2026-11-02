@@ -34,3 +34,8 @@ npm run build     # dist/
 ```
 
 Fotos: `fotos.json` (14, sin personas reconocibles); mientras no existan se ven los SVG de `public/placeholders/`.
+
+## Páginas propias
+- Cada elemento de `secciones.actividades.actividades` con `detalle` tiene su página en `/actividades/<slug>/` (`src/pages/[coleccion]/[slug].astro`).
+- Cada zona de `secciones.zonas.items` con `texto` tiene su página en `/zonas/<slug>/` (`src/pages/zonas/[slug].astro`); en la sección, `titulo_pagina` y `texto_pagina` con {zona} y {negocio}.
+- Campos opcionales de los elementos con ficha: `detalle` (párrafos separados por una línea en blanco), `slug` e `imagenes` («/fotos/a.jpg; /fotos/b.jpg»).

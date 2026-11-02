@@ -57,11 +57,71 @@ secciones:
     texto: "Todas las actividades se adaptan a tu nivel. Si no sabes cuál elegir, cuéntame qué has hecho antes y te aconsejo."
     cta: { texto: Pregúntame por una salida privada, url: "/#reserva" }
     actividades:
-      - { titulo: Ascensión al Aneto, texto: "El techo del Pirineo por el glaciar, con noche en el refugio de La Renclusa y salida de madrugada. Crampones, piolet y cuerda.", nivel: Avanzado, duracion: "2 días", precio: "desde 190 € por persona", temporada: "Junio a septiembre", imagen: /fotos/actividad-aneto.jpg }
-      - { titulo: Senderismo por los valles, texto: "Rutas de un día por Estós, Vallibierna o los ibones de Batisielles, con paradas para entender el paisaje y la flora.", nivel: Iniciación, duracion: "5 a 7 h", precio: "desde 45 € por persona", temporada: "Mayo a octubre", imagen: /fotos/actividad-senderismo.jpg }
-      - { titulo: Escalada en roca, texto: "Bautismo y cursos en las paredes de Cerler y del Ésera: nudos, aseguramiento y tus primeras vías con cuerda por arriba.", nivel: Iniciación, duracion: "Media jornada", precio: "desde 60 € por persona", temporada: "Abril a noviembre", imagen: /fotos/actividad-escalada.jpg }
-      - { titulo: Barranquismo, texto: "Descensos de barrancos acuáticos con toboganes, saltos y rápeles. Neopreno, casco y arnés incluidos.", nivel: Medio, duracion: "4 h", precio: "desde 55 € por persona", temporada: "Junio a septiembre", imagen: /fotos/actividad-barranquismo.jpg }
-      - { titulo: Esquí de travesía, texto: "Salidas y cursos de iniciación con pieles de foca por las cotas de Cerler y Llauset. Te enseño a subir, a bajar y a moverte con seguridad.", nivel: Medio, duracion: "1 día", precio: "desde 85 € por persona", temporada: "Diciembre a abril", imagen: /fotos/actividad-esqui.jpg }
+      - titulo: Ascensión al Aneto
+        texto: "El techo del Pirineo por el glaciar, con noche en el refugio de La Renclusa y salida de madrugada. Crampones, piolet y cuerda."
+        nivel: Avanzado
+        duracion: "2 días"
+        precio: "desde 190 € por persona"
+        temporada: "Junio a septiembre"
+        imagen: /fotos/actividad-aneto.jpg
+        detalle: |
+          Es la ascensión más completa del Pirineo y la hacemos con calma. El primer día subimos al refugio de La Renclusa por el valle, con tiempo para comer, descansar y repasar el material. Me gusta que lleguéis con la tarde libre para mirar la montaña y entender por dónde iremos.
+
+          Salimos de madrugada con frontal, cruzamos el collado y pisamos el glaciar encordados. Te enseño a ponerte los crampones, a llevar el piolet y a caminar en cordada. Después viene la arista final, aérea pero con buen agarre, y la cumbre con todo el Pirineo a los pies.
+
+          El material técnico va incluido: crampones, piolet, arnés, casco y cuerda. Es una actividad exigente que pide buena forma física y paso firme, así que antes de reservar hablamos de lo que has hecho hasta ahora. Si el tiempo o el estado de la nieve no acompañan, cambiamos de objetivo sin dramas.
+      - titulo: Senderismo por los valles
+        texto: "Rutas de un día por Estós, Vallibierna o los ibones de Batisielles, con paradas para entender el paisaje y la flora."
+        nivel: Iniciación
+        duracion: "5 a 7 h"
+        precio: "desde 45 € por persona"
+        temporada: "Mayo a octubre"
+        imagen: /fotos/actividad-senderismo.jpg
+        detalle: |
+          Son rutas de un día pensadas para disfrutar el paisaje sin ir con la lengua fuera. Elegimos el valle según la temporada y el grupo: Estós, Vallibierna o los ibones de Batisielles, cada uno con su carácter. Caminamos a un ritmo que se pueda mantener todo el día y paramos cuando hay algo que merece la pena mirar.
+
+          Durante el camino te cuento cómo se formaron estos valles, qué flores salen en cada época, por qué vive aquí cada animal y cómo leer el tiempo en el cielo. Es una forma de ir a la montaña que se parece más a un paseo con conversación que a una marcha.
+
+          Sirve para familias con niños acostumbrados a andar, parejas, amigos o grupos de trabajo. Tú llevas comida, agua y calzado de montaña; yo, el botiquín, el mapa y el plan alternativo por si cambia el parte.
+      - titulo: Escalada en roca
+        texto: "Bautismo y cursos en las paredes de Cerler y del Ésera: nudos, aseguramiento y tus primeras vías con cuerda por arriba."
+        nivel: Iniciación
+        duracion: "Media jornada"
+        precio: "desde 60 € por persona"
+        temporada: "Abril a noviembre"
+        imagen: /fotos/actividad-escalada.jpg
+        detalle: |
+          Un bautismo de escalada es la mejor forma de saber si esto te gusta. Vamos a las paredes de Cerler o del Ésera, elegimos una zona con vías sencillas y empezamos por lo básico: cómo ponerse el arnés, hacer el nudo de encordamiento y entender qué hace tu compañero de seguro.
+
+          Primero escalas con la cuerda por arriba, sin riesgo de caída larga, y poco a poco ganas confianza con los pies, las manos y la respiración. Si quieres seguir, el curso añade el aseguramiento a tu pareja, la lectura de la vía y el descenso con seguridad.
+
+          No hace falta fuerza ni experiencia previa, solo ganas de probar. Llevo cascos, arneses, cuerdas y pies de gato de tu talla. Conviene venir con ropa cómoda y algo de comer para la media jornada.
+      - titulo: Barranquismo
+        texto: "Descensos de barrancos acuáticos con toboganes, saltos y rápeles. Neopreno, casco y arnés incluidos."
+        nivel: Medio
+        duracion: "4 h"
+        precio: "desde 55 € por persona"
+        temporada: "Junio a septiembre"
+        imagen: /fotos/actividad-barranquismo.jpg
+        detalle: |
+          Bajar un barranco es una mezcla de juego y montaña: saltos a pozas, toboganes naturales, rápeles junto a cascadas y tramos andando por el agua. Elijo el barranco según el caudal, el nivel del grupo y la temporada, y lo reviso antes de entrar.
+
+          Empezamos en la orilla con una explicación del equipo y de las señales que usaremos. Después bajamos juntos, yo delante para montar las cuerdas y vigilar cada paso, y vosotros disfrutando de cada salto. Si alguien no se atreve con uno, siempre hay una alternativa andando.
+
+          Incluye neopreno, casco, arnés y calzado adecuado. Hay que saber nadar con soltura y no tener miedo al agua fría. Es una salida muy buena para grupos de amigos y despedidas, y también para quien quiere perder el miedo a las alturas poco a poco.
+      - titulo: Esquí de travesía
+        texto: "Salidas y cursos de iniciación con pieles de foca por las cotas de Cerler y Llauset. Te enseño a subir, a bajar y a moverte con seguridad."
+        nivel: Medio
+        duracion: "1 día"
+        precio: "desde 85 € por persona"
+        temporada: "Diciembre a abril"
+        imagen: /fotos/actividad-esqui.jpg
+        detalle: |
+          La travesía es esquiar sin remontes: subes con pieles de foca pegadas a los esquís y bajas por nieve que casi nadie ha pisado. Para quien la prueba por primera vez, es una forma tranquila y muy bonita de conocer el invierno en alta montaña.
+
+          Empezamos por el material: cómo se ponen y se quitan las pieles, cómo se cambia de subida a bajada y cómo se usa el detector de víctimas de avalancha, la pala y la sonda. Después subimos con calma por las cotas de Cerler o de Llauset, eligiendo la ladera según el parte de aludes del día.
+
+          Se necesita saber esquiar en pista con soltura. Puedo dejarte el equipo de seguridad; los esquís de travesía los alquilamos juntos si no tienes. Cada salida termina con una bajada y una charla sobre lo que hemos visto en la nieve.
       - { titulo: Raquetas de nieve, texto: "Paseos invernales hasta ibones helados y bosques nevados. Sin experiencia previa: solo ganas de caminar.", nivel: Iniciación, duracion: "4 h", precio: "desde 40 € por persona", temporada: "Diciembre a marzo", imagen: /fotos/actividad-raquetas.jpg }
 
   salidas:
@@ -119,16 +179,42 @@ secciones:
 
   zonas:
     activa: true
+    titulo_pagina: "Guía de montaña en {zona}"
+    texto_pagina: "Salidas de {negocio} por esta zona del Pirineo, con guía titulado y grupos pequeños."
     antetitulo: Dónde guío
     titulo: Mis montañas
     texto: "Trabajo sobre todo en el valle de Benasque y en los valles vecinos. Para salidas privadas me desplazo a otras zonas del Pirineo."
     items:
-      - { titulo: Valle de Benasque, texto: "Llanos del Hospital, Estós y Vallibierna." }
-      - { titulo: Macizo de la Maladeta, texto: "Aneto, Maladeta y el glaciar." }
-      - { titulo: Posets, texto: "Batisielles, Eriste y la ascensión al Posets." }
-      - { titulo: Cerler y Castanesa, texto: "Escalada, raquetas y esquí de travesía." }
-      - { titulo: Ribagorza, texto: "Barrancos y rutas de media montaña." }
-      - { titulo: Valle de Arán, texto: "Salidas privadas bajo petición." }
+      - titulo: Valle de Benasque
+        texto: |
+          Es mi casa y donde más salidas hago. El valle sube desde Benasque hasta los Llanos del Hospital y ofrece caminos para todos los niveles: paseos tranquilos por el bosque, la entrada a Estós y Vallibierna, y los accesos al macizo de la Maladeta. Desde aquí parten también las salidas de senderismo, raquetas en invierno y buena parte de las ascensiones.
+
+          Si buscas un primer día de montaña, empezamos por aquí: hay refugios, buena señalización y salidas cortas para afinar el plan según el tiempo. Los pueblos cercanos, como Cerler o Castanesa, quedan a un paso para quien quiere combinar actividades.
+      - titulo: Macizo de la Maladeta
+        texto: |
+          La Maladeta es la montaña grande del Pirineo: el Aneto, los glaciares y las crestas de granito que se ven desde el valle. Aquí hago las ascensiones con noche en el refugio, las salidas de glaciar con crampones y piolet y, en invierno, algunas travesías con esquís cuando las condiciones lo permiten.
+
+          Son rutas exigentes que preparo con tiempo: revisamos el parte, el estado de la nieve y el grupo antes de decidir el día. El acceso se hace desde el valle de Benasque, por los Llanos del Hospital y el refugio de La Renclusa. Si quieres subir al techo del Pirineo, empieza por contarme qué has caminado hasta ahora.
+      - titulo: Posets
+        texto: |
+          El Posets es otra gran cumbre del Pirineo y tiene un carácter muy distinto al de la Maladeta: más alpino, con ibones de aguas verdes, circos de roca y una ascensión larga que se disfruta mucho. Subimos por la zona de Batisielles y Eriste, con opción de noche en refugio para llegar descansados.
+
+          Es un destino perfecto para quien quiere una ascensión importante sin la presión del glaciar. También hago salidas más suaves hasta los ibones, ideales para grupos o familias con ganas de andar. Hablamos de tu nivel y elegimos la ruta que mejor encaje con la temporada.
+      - titulo: Cerler y Castanesa
+        texto: |
+          Cerler y Castanesa son mi zona para la escalada, las raquetas de nieve y el esquí de travesía. Las paredes de roca están cerca del pueblo, así que se llega pronto y se aprovecha toda la jornada; en invierno, las laderas de Cerler ofrecen buena nieve para subir con pieles y paisajes abiertos.
+
+          Es un entorno cómodo para empezar: acceso fácil, rutas cortas y mucha variedad. Desde aquí se conecta con el valle de Benasque y con la Ribagorza, de modo que se pueden juntar dos actividades en el mismo fin de semana. Si dudas por dónde empezar, te propongo un plan según tu nivel y el parte del día.
+      - titulo: Ribagorza
+        texto: |
+          La Ribagorza es la parte más suave y soleada del Pirineo, con barrancos de aguas claras, pueblos de piedra y rutas de media montaña que se pueden hacer casi todo el año. Aquí bajamos los barrancos más divertidos del verano, con toboganes, saltos y rápeles.
+
+          También hago rutas por los valles bajos cuando arriba el tiempo no acompaña: son un buen plan alternativo y muy agradecido para quien quiere probar la montaña sin altura. El acceso desde Benasque es cómodo y permite combinar varias zonas en un mismo viaje. Cuéntame cuántos sois y qué os apetece, y preparo la salida.
+      - titulo: Valle de Arán
+        texto: |
+          Para quien quiere cambiar de aires, también guío en el Valle de Arán, al otro lado del puerto. Es un valle verde y húmedo, con bosques, lagos de montaña y pueblos de piedra y pizarra, muy distinto del lado de Benasque. Aquí trabajo sobre todo con salidas privadas: rutas de senderismo, raquetas en invierno y jornadas a medida para grupos que ya vienen por la zona.
+
+          Como no es mi valle de cada día, prefiero preparar cada salida con calma. Cuéntame cuántos sois, qué época preferís y qué habéis hecho antes, y te propongo un plan con el parte y el estado del terreno bien mirados.
 
   galeria:
     activa: true

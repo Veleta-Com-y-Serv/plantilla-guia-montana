@@ -40,3 +40,8 @@ Plantilla `guia-montana` creada el 02/11/2026 a partir de `musica-espectaculos` 
 ## Negocio de ejemplo
 
 Bescós Montaña, guía de montaña en Benasque (Huesca), teléfono 974 31 86 52 y WhatsApp 689 47 21 05 (ficticios).
+
+## Páginas propias (fichas y zonas)
+Con la misma piel que la portada: cabecera y pie de la plantilla, migas (Inicio › Sección › Elemento), hero con la foto del
+elemento (sin foto, su icono), `detalle` en párrafos, tabla de datos, caja de contacto, galería (`imagenes`) y otros elementos
+de la misma lista; en las zonas, entrada, texto de la zona, servicios, trabajos del lugar, opiniones y contacto.

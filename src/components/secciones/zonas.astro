@@ -2,7 +2,11 @@
 // Zonas donde guía sobre roca con cresta: titular partido y lista a todo el ancho (2, 3 o 6 columnas) con un pico
 // naranja, el nombre grande y una línea de texto (`items: [{titulo, texto}]`). Debajo, el perfil de una sierra que
 // cruza la banda de borde a borde (decorativo). Los nombres salen también como `areaServed` en el JSON-LD.
+// Las zonas con `texto` largo tienen página propia (/zonas/<nombre>/): el nombre es un enlace y la portada
+// enseña solo un resumen del texto.
 import { seccion, esExterno } from '../../data/site';
+import { enlaceDe, resumen } from '../../lib/paginas';
+import Icono from '../ui/Icono.astro';
 import Seccion from '../ui/Seccion.astro';
 import Titular from '../ui/Titular.astro';
 interface Props { id: string }
@@ -21,8 +25,9 @@ const items = s?.items.filter((it) => it && it.titulo) ?? [];
             {items.map((it) => (
               <li class="zon">
                 <span class="zon-pico" aria-hidden="true" />
-                <h3 class="zon-titulo">{it.titulo}</h3>
-                {it.texto && <p class="zon-texto">{it.texto}</p>}
+                <h3 class="zon-titulo">{enlaceDe(it) ? <a href={enlaceDe(it)} class="zon-enlace">{it.titulo}</a> : it.titulo}</h3>
+                {it.texto && <p class="zon-texto">{enlaceDe(it) ? resumen(it.texto, 110) : it.texto}</p>}
+                {enlaceDe(it) && <span class="zon-ver dato" aria-hidden="true">Ver más <Icono nombre="flecha" tam={16} /></span>}
               </li>
             ))}
           </ul>
@@ -44,9 +49,14 @@ const items = s?.items.filter((it) => it && it.titulo) ?? [];
   .zonas { padding-bottom: 0; overflow: hidden; }
   .zon-lista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.25rem; }
   @media (min-width: 900px) { .zon-lista { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 2rem; } }
-  .zon { padding-block: 1.4rem; border-top: 2px solid var(--linea); }
+  .zon { position: relative; padding-block: 1.4rem; border-top: 2px solid var(--linea); }
   .zon-pico { display: block; width: 1.4rem; height: 1.1rem; background: var(--c-acento); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
   .zon-titulo { margin-top: .75rem; font-size: clamp(1.6rem, 3.2vw, 2.6rem); }
+  .zon-enlace { color: inherit; text-decoration: none; }
+  .zon-enlace::after { content: ""; position: absolute; inset: 0; }
+  .zon-enlace:focus-visible { outline: none; }
+  .zon:has(.zon-enlace:focus-visible) { outline: 3px solid var(--c-acento); outline-offset: -3px; }
+  .zon-ver { display: inline-flex; align-items: center; gap: .35rem; margin-top: .6rem; color: var(--resalte-texto); }
   .zon-texto { margin-top: .35rem; font-size: .98rem; opacity: .8; }
   .zon-sierra { display: block; width: 100%; height: clamp(4rem, 9vw, 8rem); margin-top: 3rem; fill: color-mix(in srgb, var(--c-primario) 22%, var(--c-fondo)); }
 </style>

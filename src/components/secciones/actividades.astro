@@ -1,10 +1,12 @@
 ---
 // Actividades: banda roca con cresta arriba y titular partido; debajo, mosaico de borde a borde (1, 2 o 3 columnas)
 // con la foto alta a sangre y, pegada a ella, la ficha en pizarra: nivel con picos (1-3), título, texto y datos
-// (duración, temporada, precio). Campos: `actividades: [{titulo, texto, nivel, duracion, precio, temporada, imagen}]`;
+// (duración, temporada, precio). Las actividades con `detalle` tienen página propia (/actividades/<nombre>/): el título
+// pasa a ser un enlace y la tarjeta entera es clicable. Campos: `actividades: [{titulo, texto, nivel, duracion, precio, temporada, imagen, detalle}]`;
 // `cta` opcional. Sin precio no hay precio; sin actividades solo sale el titular.
 import { seccion, escalones, esExterno } from '../../data/site';
 import { altFicha } from '../../lib/seo';
+import { enlaceDe } from '../../lib/paginas';
 import Titular from '../ui/Titular.astro';
 import Imagen from '../ui/Imagen.astro';
 import Icono from '../ui/Icono.astro';
@@ -44,7 +46,7 @@ const lista = s?.actividades ?? [];
                   )}
                 </div>
                 <div class="act-ficha">
-                  <h3 class="act-titulo">{a.titulo}</h3>
+                  <h3 class="act-titulo">{enlaceDe(a) ? <a href={enlaceDe(a)} class="act-enlace">{a.titulo}</a> : a.titulo}</h3>
                   {a.texto && <p class="act-texto">{a.texto}</p>}
                   {(a.duracion || a.temporada) && (
                     <ul class="act-datos dato">
@@ -53,6 +55,7 @@ const lista = s?.actividades ?? [];
                     </ul>
                   )}
                   {a.precio && <p class="act-precio">{a.precio}</p>}
+                  {enlaceDe(a) && <span class="act-ver dato" aria-hidden="true">Ver más <Icono nombre="flecha" tam={16} /></span>}
                 </div>
               </li>
             );
@@ -75,7 +78,7 @@ const lista = s?.actividades ?? [];
   .act-rejilla { display: grid; gap: 3px; background: var(--c-fondo); }
   @media (min-width: 640px) { .act-rejilla--2, .act-rejilla--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (min-width: 1100px) { .act-rejilla--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .act { display: flex; flex-direction: column; background: var(--pizarra); color: var(--c-fondo); }
+  .act { position: relative; display: flex; flex-direction: column; background: var(--pizarra); color: var(--c-fondo); }
   .act-foto { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--c-primario); }
   @media (min-width: 640px) { .act-foto { aspect-ratio: 5 / 4; } }
   .act-foto :global(img) { transition: transform .6s ease; }
@@ -90,6 +93,11 @@ const lista = s?.actividades ?? [];
   .act-datos li { display: inline-flex; align-items: center; gap: .4rem; }
   .act-datos :global(svg) { color: var(--c-acento); }
   .act-precio { margin-top: auto; padding-top: 1.1rem; font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: 1.45rem; line-height: 1.1; color: var(--c-acento); }
+  .act-enlace { color: inherit; text-decoration: none; }
+  .act-enlace::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+  .act-enlace:focus-visible { outline: none; }
+  .act:has(.act-enlace:focus-visible) { outline: 3px solid var(--c-acento); outline-offset: -3px; }
+  .act-ver { display: inline-flex; align-items: center; gap: .35rem; margin-top: 1rem; color: var(--c-fondo); }
   .act-pie { padding-block: 2.5rem var(--ritmo); }
   @media (min-width: 768px) { .act-pie { padding-bottom: var(--ritmo-md); } }
   .actividades:not(:has(.act-pie)) { padding-bottom: calc(var(--alto-cresta) + 1.5rem); }

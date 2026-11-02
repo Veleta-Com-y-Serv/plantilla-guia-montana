@@ -52,3 +52,16 @@ npm ci && npm run build      # resultado en dist/
 npx astro preview            # ver dist/ en http://localhost:4321
 ```
 Antes de dar una orden por buena: `npm run build` sin errores.
+
+## Páginas propias (fichas por elemento y páginas por zona)
+- Listas con página propia (espejo de `fichas:` de template.yaml en `src/data/fichas.ts`): `secciones.actividades.actividades` → `/actividades/<slug>/` (actividad).
+  **Solo los elementos con `detalle`** (texto largo, párrafos separados por una línea en blanco, ≤ 3000 caracteres, sin HTML) tienen página;
+  los demás siguen como hasta ahora. Campos opcionales del elemento: `slug` (si falta, sale del nombre; no lo pongas sin motivo)
+  e `imagenes` («/fotos/a.jpg; /fotos/b.jpg», galería de la ficha; la foto principal es `imagen` o, si no hay, la primera de `imagenes`).
+  El resto de campos (precio, duración…) salen en la tabla de datos de la ficha.
+- Zonas: cada elemento de `secciones.zonas.items` **con `texto`** (60-150 palabras: qué trabajos se hacen allí, pueblos cercanos)
+  tiene su página en `/zonas/<slug>/`. En la sección: `titulo_pagina` («Reformas en {zona}») y `texto_pagina` (entrada, con {zona} y {negocio}).
+- Una orden «añade una página para X» = escribir su `detalle` (o el `texto` de la zona) en site.yaml. Nunca crees a mano páginas en
+  `src/pages/actividades/` ni en `src/pages/zonas/`: salen solas de `src/pages/[coleccion]/[slug].astro` y `src/pages/zonas/[slug].astro`.
+- No tocar `src/lib/paginas.ts`, `src/lib/slug.ts` ni `src/lib/seo.ts` (comunes a todas las plantillas). Las páginas propias entran solas en
+  `sitemap.xml` y `llms.txt`, con su JSON-LD (migas y servicio/producto con precio si lo hay; zonas con `areaServed`).
