@@ -1,0 +1,184 @@
+# Contenido de la web. Es lo único que rellena la plataforma NoExpertise.
+# Una sola página: el menú apunta a anclas (#id-de-sección).
+# Las secciones se muestran en el orden de este fichero. Para ocultar una: activa: false.
+# Apartado nuevo: un id propio (es su ancla, /#id) con `tipo:` = el diseño de otra sección o `texto`.
+# Listas planas: nunca una lista dentro de un elemento de lista. Precios siempre entre comillas.
+nombre: Bescós Montaña
+eslogan: Guía de montaña en Benasque. Ascensiones, rutas, escalada y barrancos en grupos pequeños.
+sector: guia-montana
+logo: ""          # ruta a una imagen en public/ (p. ej. /logo.svg). Vacío = pico con la inicial + nombre.
+colores:
+  primario: "#1f4a36"   # verde pino: bandas oscuras de color pleno, salidas, opiniones y botón de llamar
+  acento: "#f26419"     # naranja chaleco: botones, señales de la portada, material, reserva y resaltados
+  fondo: "#ecebe5"      # roca clara: bandas claras (con fondo oscuro el diseño también funciona)
+  texto: "#17201b"
+contacto:
+  telefono: "974 31 86 52"
+  email: hola@bescosmontana.es
+  direccion: Calle San Pedro 12, 22440 Benasque (Huesca)
+  horario: "Te atiendo todos los días de 9:00 a 21:00. Si estoy en la montaña, te llamo al bajar."
+  whatsapp: "+34 689 47 21 05"
+redes:
+  instagram: https://www.instagram.com/
+  facebook: ""
+  linkedin: ""
+menu:
+  - { texto: Actividades, url: "/#actividades" }
+  - { texto: Salidas, url: "/#salidas" }
+  - { texto: Sobre mí, url: "/#guia" }
+  - { texto: Seguridad, url: "/#seguridad" }
+  - { texto: Contacto, url: "/#contacto" }
+boton_cabecera: { texto: Reservar, url: "/#reserva" }
+seo:
+  titulo: Bescós Montaña · Guía de montaña en Benasque (Pirineo)
+  descripcion: "Guía de montaña titulado en Benasque: ascensiones al Aneto y al Posets, senderismo, escalada, barranquismo y esquí de travesía en grupos pequeños."
+  tipo: SportsActivityLocation
+marca_pie: true
+
+secciones:
+  hero:
+    activa: true
+    antetitulo: Guía de montaña · Benasque
+    titulo: Sube conmigo al Pirineo
+    texto: "Soy Pau, técnico deportivo en alta montaña. Guío ascensiones, rutas, escalada y barrancos en el valle de Benasque, en grupos pequeños y a tu ritmo."
+    imagen: /fotos/hero.jpg
+    cta: { texto: Reserva tu salida, url: "/#reserva" }
+    cta_secundario: { texto: Escríbeme por WhatsApp, url: "https://wa.me/34689472105" }
+    items:
+      - { titulo: Aneto y Posets, icono: montana }
+      - { titulo: Grupos pequeños, icono: usuarios }
+      - { titulo: Material incluido, icono: mochila }
+      - { titulo: Todo el año, icono: sol }
+
+  actividades:
+    activa: true
+    antetitulo: Actividades
+    titulo: Elige tu montaña
+    texto: "Todas las actividades se adaptan a tu nivel. Si no sabes cuál elegir, cuéntame qué has hecho antes y te aconsejo."
+    cta: { texto: Pregúntame por una salida privada, url: "/#reserva" }
+    actividades:
+      - { titulo: Ascensión al Aneto, texto: "El techo del Pirineo por el glaciar, con noche en el refugio de La Renclusa y salida de madrugada. Crampones, piolet y cuerda.", nivel: Avanzado, duracion: "2 días", precio: "desde 190 € por persona", temporada: "Junio a septiembre", imagen: /fotos/actividad-aneto.jpg }
+      - { titulo: Senderismo por los valles, texto: "Rutas de un día por Estós, Vallibierna o los ibones de Batisielles, con paradas para entender el paisaje y la flora.", nivel: Iniciación, duracion: "5 a 7 h", precio: "desde 45 € por persona", temporada: "Mayo a octubre", imagen: /fotos/actividad-senderismo.jpg }
+      - { titulo: Escalada en roca, texto: "Bautismo y cursos en las paredes de Cerler y del Ésera: nudos, aseguramiento y tus primeras vías con cuerda por arriba.", nivel: Iniciación, duracion: "Media jornada", precio: "desde 60 € por persona", temporada: "Abril a noviembre", imagen: /fotos/actividad-escalada.jpg }
+      - { titulo: Barranquismo, texto: "Descensos de barrancos acuáticos con toboganes, saltos y rápeles. Neopreno, casco y arnés incluidos.", nivel: Medio, duracion: "4 h", precio: "desde 55 € por persona", temporada: "Junio a septiembre", imagen: /fotos/actividad-barranquismo.jpg }
+      - { titulo: Esquí de travesía, texto: "Salidas y cursos de iniciación con pieles de foca por las cotas de Cerler y Llauset. Te enseño a subir, a bajar y a moverte con seguridad.", nivel: Medio, duracion: "1 día", precio: "desde 85 € por persona", temporada: "Diciembre a abril", imagen: /fotos/actividad-esqui.jpg }
+      - { titulo: Raquetas de nieve, texto: "Paseos invernales hasta ibones helados y bosques nevados. Sin experiencia previa: solo ganas de caminar.", nivel: Iniciación, duracion: "4 h", precio: "desde 40 € por persona", temporada: "Diciembre a marzo", imagen: /fotos/actividad-raquetas.jpg }
+
+  salidas:
+    activa: true
+    antetitulo: Calendario
+    titulo: Próximas salidas en grupo
+    texto: "Salidas con fecha fija para apuntarte solo o con amigos. Grupos de seis a ocho personas, como mucho."
+    nota: "Si una salida se cancela por el tiempo, te propongo otra fecha o te devuelvo el dinero."
+    salidas:
+      - { fecha: "22 nov 2026", titulo: Raquetas al ibón de Gorgutes, lugar: Valle de Benasque, plazas: "8", precio: "40 €", estado: Plazas libres }
+      - { fecha: "6 dic 2026", titulo: Iniciación al esquí de travesía, lugar: Cerler, plazas: "6", precio: "85 €", estado: Últimas plazas }
+      - { fecha: "26 dic 2026", titulo: Raquetas nocturnas con luna llena, lugar: Llanos del Hospital, plazas: "8", precio: "45 €", estado: Plazas libres }
+      - { fecha: "10 ene 2027", titulo: Travesía al Puerto de Benasque, lugar: Hospital de Benasque, plazas: "6", precio: "85 €", estado: Completo }
+      - { fecha: "13 feb 2027", titulo: Curso de nieve y avalanchas, lugar: Cerler, plazas: "6", precio: "120 €", estado: Plazas libres }
+      - { fecha: "20 jun 2027", titulo: Aneto por el glaciar, lugar: Refugio de La Renclusa, plazas: "4", precio: "190 €", estado: Plazas libres }
+
+  guia:
+    activa: true
+    antetitulo: Sobre mí
+    titulo: Hola, soy Pau
+    texto: "Nací en Benasque y llevo toda la vida en estas montañas. Desde 2011 trabajo como guía: primero en refugios y escuelas, y ahora por mi cuenta, con grupos pequeños que quieren ir a la montaña bien acompañados.\n\nMe gusta explicar lo que vemos, cuidar el ritmo de cada uno y volver siempre con todo el grupo. Si la montaña no está para subir, nos damos la vuelta y buscamos otro plan."
+    imagen: /fotos/guia-montana.jpg
+    items:
+      - { titulo: Técnico Deportivo Superior en Alta Montaña, texto: "Titulación oficial para guiar en terreno glaciar, escalada y esquí.", icono: montana }
+      - { titulo: Federado en montaña, texto: "Licencia federativa en vigor todos los años.", icono: bandera }
+      - { titulo: Seguro de accidentes y responsabilidad civil, texto: "Cada cliente va asegurado durante la actividad.", icono: escudo }
+      - { titulo: Primeros auxilios en zonas remotas, texto: "Formación que renuevo cada dos años.", icono: botiquin }
+
+  material:
+    activa: true
+    antetitulo: Material incluido
+    titulo: Lo técnico lo pongo yo
+    texto: "No necesitas comprar nada para probar. Llevo el material técnico de cada actividad, revisado y a tu talla."
+    nota: "Tú traes botas de montaña, ropa de abrigo, agua y algo de comer. Si te falta algo, pregúntame y te lo dejo."
+    items:
+      - { titulo: Casco y arnés, texto: "Homologados y ajustados antes de empezar.", icono: casco }
+      - { titulo: Cuerdas y mosquetones, texto: "Para escalada, rápeles y glaciar.", icono: cuerda }
+      - { titulo: Crampones y piolet, texto: "En las ascensiones con nieve o hielo.", icono: piolet }
+      - { titulo: Raquetas y bastones, texto: "En todas las salidas de invierno.", icono: raqueta }
+      - { titulo: "Detector, pala y sonda", texto: "Material de avalanchas en cada salida con nieve.", icono: radio }
+      - { titulo: Neopreno, texto: "Traje, escarpines y casco para los barrancos.", icono: agua }
+      - { titulo: Botiquín y emisora, texto: "Siempre en mi mochila, con el teléfono de rescate.", icono: botiquin }
+      - { titulo: Fotos de la salida, texto: "Te las paso el mismo día por WhatsApp.", icono: camara }
+
+  seguridad:
+    activa: true
+    antetitulo: Seguridad
+    titulo: Volver es la cumbre
+    texto: "Antes de cada salida miro el parte de montaña y el de aludes, preparo un plan alternativo y te cuento cómo vamos a ir. Estas son las dudas que más me preguntáis."
+    preguntas:
+      - { pregunta: "¿Qué pasa si hace mal tiempo?", respuesta: "Si el parte no es seguro, cambiamos de actividad o de fecha. Nunca pierdes el dinero por una cancelación por el tiempo." }
+      - { pregunta: "¿Cuántas personas lleváis por guía?", respuesta: "Depende de la actividad: hasta ocho en senderismo y raquetas, seis en esquí de travesía y cuatro en terreno glaciar." }
+      - { pregunta: "¿Y si no puedo seguir el ritmo?", respuesta: "Ajustamos el ritmo al grupo y en cada ruta hay puntos para darse la vuelta. Nadie se queda solo en la montaña." }
+      - { pregunta: "¿Qué seguro tengo durante la actividad?", respuesta: "Todas las actividades incluyen seguro de accidentes y de responsabilidad civil. Si estás federado, me lo dices al reservar." }
+
+  zonas:
+    activa: true
+    antetitulo: Dónde guío
+    titulo: Mis montañas
+    texto: "Trabajo sobre todo en el valle de Benasque y en los valles vecinos. Para salidas privadas me desplazo a otras zonas del Pirineo."
+    items:
+      - { titulo: Valle de Benasque, texto: "Llanos del Hospital, Estós y Vallibierna." }
+      - { titulo: Macizo de la Maladeta, texto: "Aneto, Maladeta y el glaciar." }
+      - { titulo: Posets, texto: "Batisielles, Eriste y la ascensión al Posets." }
+      - { titulo: Cerler y Castanesa, texto: "Escalada, raquetas y esquí de travesía." }
+      - { titulo: Ribagorza, texto: "Barrancos y rutas de media montaña." }
+      - { titulo: Valle de Arán, texto: "Salidas privadas bajo petición." }
+
+  galeria:
+    activa: true
+    antetitulo: Galería
+    titulo: Así se ve desde arriba
+    galeria:
+      - /fotos/galeria-1.jpg
+      - /fotos/galeria-2.jpg
+      - /fotos/galeria-3.jpg
+      - /fotos/galeria-4.jpg
+      - /fotos/galeria-5.jpg
+      - /fotos/galeria-6.jpg
+
+  opiniones:
+    activa: true
+    antetitulo: Opiniones
+    titulo: Lo que cuentan al bajar
+    testimonios:
+      - { texto: "Subimos al Aneto con Pau sin haber pisado nunca un glaciar. Nos explicó cada paso y nos sentimos seguros todo el rato.", autor: Lucía y Andrés, nota: "Ascensión al Aneto, julio" }
+      - { texto: "El bautismo de escalada fue perfecto para los niños. Paciencia infinita y muchas risas.", autor: Familia Gracia, nota: Escalada en Cerler }
+      - { texto: "Se dio la vuelta a tiempo cuando se cerró la niebla y nos llevó a un ibón precioso. Repetiremos.", autor: Marta R., nota: Raquetas de nieve }
+
+  preguntas:
+    activa: true
+    antetitulo: Preguntas
+    titulo: Antes de reservar
+    preguntas:
+      - { pregunta: "¿Necesito experiencia?", respuesta: "Para las actividades de iniciación, no. Para las ascensiones y el esquí de travesía te pregunto qué has hecho antes y te recomiendo la más adecuada." }
+      - { pregunta: "¿A partir de qué edad se puede venir?", respuesta: "Senderismo, raquetas y escalada, desde los ocho años acompañados de un adulto. Barrancos, desde los doce. Ascensiones, mayores de edad o con permiso." }
+      - { pregunta: "¿Cómo se reserva y se paga?", respuesta: "Me escribes, te confirmo la plaza y pagas una señal por transferencia o Bizum. El resto, el día de la actividad." }
+      - { pregunta: "¿Hacéis salidas privadas?", respuesta: "Sí. Para tu grupo, tu familia o tu empresa, en la fecha que elijas y con la actividad que quieras." }
+      - { pregunta: "¿Dónde quedamos?", respuesta: "En Benasque o en el punto de inicio de la ruta. Al reservar te mando la ubicación y la hora por WhatsApp." }
+
+  reserva:
+    activa: true
+    antetitulo: Reserva
+    titulo: Pide tu plaza
+    texto: "Dime qué te apetece hacer, la fecha y cuántos sois. Te contesto el mismo día con la disponibilidad y el precio cerrado."
+    niveles: "Iniciación; Medio; Avanzado"
+    boton_formulario: Pedir plaza
+    cta: { texto: Reserva por WhatsApp, url: "https://wa.me/34689472105" }
+    items:
+      - { titulo: Me escribes, texto: "Por WhatsApp, por teléfono o con el formulario." }
+      - { titulo: Te confirmo la plaza, texto: "Con el plan, la hora y el punto de encuentro." }
+      - { titulo: Preparamos la salida, texto: "Te digo qué traer y miramos juntos el parte." }
+      - { titulo: A la montaña, texto: "Yo pongo el material técnico. Tú, las ganas." }
+
+  contacto:
+    activa: true
+    antetitulo: Contacto
+    titulo: Hablamos
+    texto: "Llámame o escríbeme por WhatsApp: es lo más rápido. Si estoy guiando, te contesto en cuanto baje."
+    boton_formulario: Enviar mensaje

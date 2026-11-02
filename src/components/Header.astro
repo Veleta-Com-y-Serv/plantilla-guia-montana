@@ -1,0 +1,74 @@
+---
+// Cabecera fija a todo el ancho: pico naranja con la inicial + nombre condensado (o logo), menú (site.yaml → menu),
+// botón de WhatsApp (contacto.whatsapp; en móvil solo el icono) y botón de acción (site.yaml → boton_cabecera).
+// Es sólida (pizarra); un script pequeño la deja transparente mientras la portada a sangre está debajo y no se ha
+// hecho scroll. Hasta 1100 px, menú plegable con <details> (abre sin JavaScript). Aspecto en global.css (.cabecera--<variante>).
+import { site, whatsapp } from '../data/site';
+import type { Enlace } from '../data/site';
+import Icono from './ui/Icono.astro';
+interface Props { variante?: string; cta?: Enlace | null }
+const { variante = 'cumbre', cta = null } = Astro.props;
+const wa = whatsapp(site.contacto.whatsapp, `Hola, escribo desde la web de ${site.nombre}.`);
+---
+
+<header class={`cabecera cabecera--${variante}`} data-cabecera>
+  <div class="contenedor cabecera-fila">
+    <a href="/" class="marca" aria-label={`${site.nombre}, inicio`}>
+      {
+        site.logo ? (
+          <img src={site.logo} alt={site.nombre} class="marca-logo" width="160" height="40" />
+        ) : (
+          <>
+            <span class="marca-pico" aria-hidden="true">{site.nombre.trim().charAt(0)}</span>
+            <span class="marca-nombre">{site.nombre}</span>
+          </>
+        )
+      }
+    </a>
+    {
+      site.menu.length > 0 && (
+        <nav class="cabecera-nav" aria-label="Menú principal">
+          {site.menu.map((e) => <a href={e.url}>{e.texto}</a>)}
+        </nav>
+      )
+    }
+    {
+      wa && (
+        <a class="cabecera-wa" href={wa} rel="noopener" target="_blank" aria-label="Escribir por WhatsApp">
+          <Icono nombre="whatsapp" tam={22} />
+          <span>WhatsApp</span>
+        </a>
+      )
+    }
+    {cta && cta.url && <a href={cta.url} class="btn cabecera-cta">{cta.texto}</a>}
+    {
+      (site.menu.length > 0 || (cta && cta.url)) && (
+        <details class="menu-movil">
+          <summary aria-label="Abrir el menú">
+            <span class="menu-movil-icono" aria-hidden="true" />
+            <span>Menú</span>
+          </summary>
+          <nav class="menu-movil-panel" aria-label="Menú">
+            {site.menu.map((e) => <a href={e.url}>{e.texto}</a>)}
+            {cta && cta.url && <a href={cta.url} class="btn">{cta.texto}</a>}
+          </nav>
+        </details>
+      )
+    }
+  </div>
+</header>
+<script is:inline>
+  (function () {
+    var c = document.querySelector('[data-cabecera]');
+    document.querySelectorAll('.menu-movil a').forEach(function (a) {
+      a.addEventListener('click', function () { a.closest('details').open = false; });
+    });
+    // Transparente solo si la primera sección es la portada a sangre y el menú móvil está cerrado
+    if (!c || !document.querySelector('main > .portada--primera')) return;
+    var menu = c.querySelector('.menu-movil');
+    var poner = function () { c.classList.toggle('es-transparente', window.scrollY < 40 && !(menu && menu.open)); };
+    poner();
+    window.addEventListener('scroll', poner, { passive: true });
+    if (menu) menu.addEventListener('toggle', poner);
+  })();
+</script>

@@ -1,0 +1,41 @@
+---
+// Ejemplo de página adicional: usa el layout base y se enlaza desde el pie (o desde site.yaml → menu).
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+const c = site.contacto;
+---
+
+<Base titulo="Aviso legal y privacidad" descripcion={`Aviso legal y política de privacidad de ${site.nombre}.`}>
+  <section class="banda-pino curvas">
+    <div class="contenedor pt-16 pb-16 md:pt-24 md:pb-20">
+      <p class="antetitulo">{site.nombre}</p>
+      <h1 class="titulo-seccion">Aviso legal y privacidad</h1>
+    </div>
+  </section>
+  <section class="banda-roca cresta cresta--suave">
+    <article class="contenedor max-w-3xl pt-12 pb-16 md:pb-24 texto-largo">
+      <h2>Quién soy</h2>
+      <p>
+        Esta web pertenece a {site.nombre}{c.direccion && `, con domicilio en ${c.direccion}`}. Puedes escribirme a {
+          c.email || 'mi correo de contacto'
+        }{c.telefono && ` o llamarme al ${c.telefono}`}.
+      </p>
+      <h2>Qué datos trato</h2>
+      <p>
+        Solo los que me envías al escribirme: nombre, teléfono y, si me pides una reserva, la fecha, la actividad, cuántas
+        personas sois, vuestro nivel y tu mensaje. Los uso para responderte y organizar la salida. No los cedo a nadie
+        salvo obligación legal o a la aseguradora de la actividad, si hace falta.
+      </p>
+      <h2>Cuánto tiempo los guardo</h2>
+      <p>El necesario para atender tu consulta y, si haces una actividad conmigo, el que marque la ley.</p>
+      <h2>Tus derechos</h2>
+      <p>
+        Puedes pedir acceso, rectificación o supresión de tus datos escribiendo a {c.email || 'mi correo'}. También
+        puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es).
+      </p>
+      <h2>Cookies</h2>
+      <p>Esta web no usa cookies de seguimiento. WhatsApp y los mapas se abren en la web o la aplicación de cada servicio.</p>
+      <p class="mt-10"><a class="btn" href="/">Volver al inicio</a></p>
+    </article>
+  </section>
+</Base>

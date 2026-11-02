@@ -1,0 +1,89 @@
+---
+// Formulario corto sin servidor: si hay email en site.yaml abre el programa de correo (mailto) con los campos en el
+// cuerpo. Si no hay email, se queda como muestra y lo avisa. Para un envío real, cambia `action` por el de tu proveedor.
+// Campos: nombre, teléfono y mensaje. Con `reserva` pide además la fecha, cuántas personas, la actividad (desplegable
+// con los títulos de las actividades, o texto libre si no hay) y el nivel (desplegable con `niveles`).
+// `prefijo` hace únicos los ids si hay más de un formulario en la página.
+import { site, intereses } from '../../data/site';
+interface Props { boton?: string; class?: string; asunto?: string; prefijo?: string; reserva?: boolean; niveles?: string[] }
+const {
+  boton = 'Enviar',
+  class: clase = '',
+  asunto = `Consulta desde la web de ${site.nombre}`,
+  prefijo = 'f',
+  reserva = false,
+  niveles = [],
+} = Astro.props;
+const email = site.contacto.email;
+const accion = email ? `mailto:${email}?subject=${encodeURIComponent(asunto)}` : '';
+const actividades = intereses();
+const id = (campo: string) => `${prefijo}-${campo}`;
+---
+
+<form class:list={['formulario', clase]} action={accion || undefined} method="post" enctype="text/plain">
+  <div class="campo-doble">
+    <div class="campo">
+      <label for={id('nombre')}>Nombre</label>
+      <input id={id('nombre')} name="nombre" type="text" autocomplete="name" required />
+    </div>
+    <div class="campo">
+      <label for={id('telefono')}>Teléfono</label>
+      <input id={id('telefono')} name="telefono" type="tel" autocomplete="tel" inputmode="tel" required />
+    </div>
+  </div>
+  {
+    reserva && (
+      <>
+        <div class="campo-doble">
+          <div class="campo">
+            <label for={id('fecha')}>Fecha</label>
+            <input id={id('fecha')} name="fecha" type="date" />
+          </div>
+          <div class="campo">
+            <label for={id('personas')}>Personas</label>
+            <input id={id('personas')} name="personas" type="number" min="1" max="30" inputmode="numeric" />
+          </div>
+        </div>
+        <div class="campo-doble">
+          <div class="campo">
+            <label for={id('actividad')}>Actividad</label>
+            {actividades.length > 0 ? (
+              <select id={id('actividad')} name="actividad">
+                {actividades.map((o) => <option value={o}>{o}</option>)}
+                <option value="Otra / no lo sé">Otra / no lo sé</option>
+              </select>
+            ) : (
+              <input id={id('actividad')} name="actividad" type="text" />
+            )}
+          </div>
+          <div class="campo">
+            <label for={id('nivel')}>Tu nivel</label>
+            {niveles.length > 0 ? (
+              <select id={id('nivel')} name="nivel">
+                {niveles.map((o) => <option value={o}>{o}</option>)}
+              </select>
+            ) : (
+              <input id={id('nivel')} name="nivel" type="text" />
+            )}
+          </div>
+        </div>
+      </>
+    )
+  }
+  <div class="campo">
+    <label for={id('mensaje')}>{reserva ? '¿Qué te apetece hacer?' : '¿Qué necesitas?'}</label>
+    <textarea id={id('mensaje')} name="mensaje" rows="3"></textarea>
+  </div>
+  <label class="campo-check">
+    <input type="checkbox" name="privacidad" required />
+    <span>He leído el <a href="/aviso-legal">aviso legal y la política de privacidad</a>.</span>
+  </label>
+  <button type="submit" class="btn">{boton}</button>
+  <p class="formulario-aviso">
+    {
+      email
+        ? 'Al enviar se abre tu programa de correo con el mensaje listo.'
+        : 'Formulario de muestra: todavía no envía mensajes. Usa el teléfono o el WhatsApp.'
+    }
+  </p>
+</form>

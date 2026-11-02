@@ -1,0 +1,97 @@
+---
+// Próximas salidas en grupo sobre pino con cresta y curvas de nivel: tabla de ruta a todo el ancho. Cada fila: el día
+// en grande (sale del número de `fecha`), título y lugar, plazas, precio, estado y botón «Quiero plaza» (WhatsApp con
+// el mensaje hecho o, sin WhatsApp, el formulario de reserva). Campos: `salidas: [{fecha, titulo, lugar, plazas,
+// precio, estado}]`; `estado`: «Plazas libres», «Últimas plazas» (naranja), «Completo» (tachado y sin botón) o libre.
+// `nota` y `cta` opcionales. Pon las salidas en orden: la primera con plazas sale en la portada y en el pie.
+import { seccion, site, partirFecha, whatsapp, esCompleta, esUltimas, seccionesActivas, esExterno } from '../../data/site';
+import Seccion from '../ui/Seccion.astro';
+import Titular from '../ui/Titular.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const lista = s?.salidas ?? [];
+const ancla = seccionesActivas().find((x) => x === 'reserva' || site.secciones[x].tipo === 'reserva') ?? 'contacto';
+const plazasTxt = (p?: string) => {
+  const t = String(p ?? '').trim();
+  if (!t) return '';
+  return /^\d+$/.test(t) ? `${t} ${t === '1' ? 'plaza' : 'plazas'}` : t;
+};
+const pedir = (titulo = '', fecha = '') =>
+  whatsapp(site.contacto.whatsapp, `Hola, quiero plaza para «${titulo}»${fecha ? ` del ${fecha}` : ''}.`) || `#${ancla}`;
+---
+
+{
+  s && (
+    <Seccion id={id} banda="pino" cresta curvas>
+      <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} partido />
+      {lista.length > 0 && (
+        <ol class="salidas">
+          {lista.map((f) => {
+            const d = partirFecha(f.fecha);
+            const completa = esCompleta(f.estado);
+            const url = pedir(f.titulo || f.lugar, f.fecha);
+            return (
+              <li class:list={['salida', { 'salida--completa': completa }]}>
+                <p class="salida-fecha">
+                  {d.dia && <span class="salida-dia">{d.dia}</span>}
+                  {d.resto && <span class="salida-mes dato">{d.resto}</span>}
+                </p>
+                <div class="salida-que">
+                  {f.titulo && <h3 class="salida-titulo">{f.titulo}</h3>}
+                  {f.lugar && <p class="salida-lugar"><Icono nombre="mapa" tam={18} />{f.lugar}</p>}
+                </div>
+                <p class="salida-datos dato">
+                  {plazasTxt(f.plazas) && <span><Icono nombre="usuarios" tam={18} />{plazasTxt(f.plazas)}</span>}
+                  {f.precio && <span class="salida-precio">{f.precio}</span>}
+                </p>
+                <div class="salida-accion">
+                  {f.estado && <span class:list={['estado', { 'estado--ultimas': esUltimas(f.estado), 'estado--completo': completa }]}>{f.estado}</span>}
+                  {!completa && (
+                    <a class="btn-sec salida-btn" href={url} {...(esExterno(url) ? { target: '_blank', rel: 'noopener' } : {})} aria-label={`Quiero plaza: ${[f.titulo, f.fecha].filter(Boolean).join(', ')}`}>
+                      Quiero plaza
+                    </a>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      )}
+      {(s.nota || s.cta) && (
+        <div class="salidas-pie">
+          {s.nota && <p class="salidas-nota"><Icono nombre="aviso" tam={20} />{s.nota}</p>}
+          {s.cta && <a class="btn" href={s.cta.url} {...(esExterno(s.cta.url) ? { target: '_blank', rel: 'noopener' } : {})}>{s.cta.texto}</a>}
+        </div>
+      )}
+    </Seccion>
+  )
+}
+
+<style>
+  .salidas { border-top: 3px solid var(--c-acento); }
+  .salida { display: grid; grid-template-columns: 4.75rem minmax(0, 1fr); gap: .5rem 1.1rem; padding-block: 1.4rem; border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); transition: background-color .2s ease; }
+  .salida-fecha { grid-row: span 3; display: grid; align-content: start; justify-items: start; }
+  .salida-dia { font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: 3.6rem; line-height: .82; color: var(--c-acento); }
+  .salida-mes { margin-top: .35rem; font-size: .78rem; opacity: .85; }
+  .salida-titulo { font-size: clamp(1.55rem, 3vw, 2.2rem); }
+  .salida-lugar { margin-top: .35rem; display: inline-flex; align-items: center; gap: .4rem; opacity: .85; }
+  .salida-datos { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem 1.25rem; }
+  .salida-datos span { display: inline-flex; align-items: center; gap: .4rem; }
+  .salida-precio { font-size: 1.25rem; letter-spacing: .04em; color: var(--resalte-texto); }
+  .salida-accion { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; }
+  .salida-btn { min-height: 2.75rem; font-size: .95rem; padding-inline: 1rem 1.4rem; }
+  .salida--completa .salida-dia, .salida--completa .salida-titulo { opacity: .55; }
+  @media (min-width: 900px) {
+    .salida { grid-template-columns: 7rem minmax(0, 1.6fr) minmax(0, 1fr) 19rem; align-items: center; gap: 1.5rem 2rem; padding-inline: 1rem; }
+    .salida-fecha { grid-row: auto; }
+    .salida-dia { font-size: 4.5rem; }
+    .salida-datos { flex-direction: column; align-items: flex-start; }
+    .salida-accion { justify-content: flex-end; }
+    .salida:hover { background: color-mix(in srgb, currentColor 6%, transparent); }
+  }
+  .salidas-pie { margin-top: 2.25rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem 2rem; }
+  .salidas-nota { display: flex; align-items: flex-start; gap: .6rem; max-width: 46rem; opacity: .9; }
+  .salidas-nota :global(svg) { flex-shrink: 0; color: var(--c-acento); margin-top: .15rem; }
+</style>

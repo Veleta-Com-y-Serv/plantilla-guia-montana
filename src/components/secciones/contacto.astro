@@ -1,0 +1,65 @@
+---
+// Contacto sobre niebla con cresta suave: titular, teléfono enorme en verde pino, botón grande de WhatsApp, email,
+// dirección con enlace al mapa y horario (site.yaml → contacto) y, al lado, el formulario corto (nombre, teléfono y
+// qué necesitas) en bloque pizarra con raya naranja. `boton_formulario` opcional.
+import { seccion, site, tel, whatsapp, mapa } from '../../data/site';
+import Seccion from '../ui/Seccion.astro';
+import Titular from '../ui/Titular.astro';
+import Icono from '../ui/Icono.astro';
+import FormularioContacto from '../ui/FormularioContacto.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const c = site.contacto;
+const wa = whatsapp(c.whatsapp, `Hola, escribo desde la web de ${site.nombre}.`);
+const botonForm = (s?.boton_formulario as string) || undefined;
+---
+
+{
+  s && (
+    <Seccion id={id} banda="niebla" cresta="suave">
+      <div class="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
+        <div class="min-w-0">
+          <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+          {c.telefono && (
+            <a class="contacto-telefono" href={tel(c.telefono)}>
+              <Icono nombre="telefono" tam={44} class="contacto-tel-icono" />
+              {c.telefono}
+            </a>
+          )}
+          {wa && (
+            <p class="mt-6">
+              <a class="btn contacto-wa" href={wa} rel="noopener" target="_blank"><Icono nombre="whatsapp" tam={24} />Escríbeme por WhatsApp</a>
+            </p>
+          )}
+          <ul class="contacto-vias">
+            {c.email && (
+              <li><a class="contacto-dato break-all" href={`mailto:${c.email}`}><Icono nombre="correo" class="shrink-0" />{c.email}</a></li>
+            )}
+            {c.direccion && (
+              <li><a class="contacto-dato" href={mapa(c.direccion)} rel="noopener" target="_blank"><Icono nombre="mapa" class="shrink-0" />{c.direccion}</a></li>
+            )}
+            {c.horario && <li class="contacto-dato"><Icono nombre="reloj" class="shrink-0" />{c.horario}</li>}
+          </ul>
+        </div>
+        <div class="contacto-form banda-pizarra">
+          <FormularioContacto prefijo={`${id}-f`} boton={botonForm} />
+        </div>
+      </div>
+    </Seccion>
+  )
+}
+
+<style>
+  .contacto-telefono { display: inline-flex; align-items: center; gap: .75rem; font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: clamp(2.6rem, 11vw, 6rem); line-height: .95; letter-spacing: -.01em; text-decoration: none; color: var(--c-primario); }
+  .contacto-telefono :global(.contacto-tel-icono) { flex-shrink: 0; width: .7em; height: .7em; color: var(--resalte-texto); }
+  .contacto-telefono:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: .12em; }
+  .contacto-wa { min-height: 3.5rem; font-size: 1.15rem; }
+  .contacto-vias { margin-top: 2.25rem; display: grid; gap: 1.1rem; }
+  @media (min-width: 640px) and (max-width: 1023px) { .contacto-vias { grid-template-columns: 1fr 1fr; } }
+  .contacto-dato { display: flex; align-items: flex-start; gap: .8rem; text-decoration: none; font-size: 1.05rem; }
+  .contacto-dato :global(svg) { color: var(--c-primario); margin-top: .1rem; }
+  a.contacto-dato:hover { color: var(--resalte-texto); }
+  .contacto-form { padding: 1.75rem 1rem; border-top: 5px solid var(--c-acento); }
+  @media (min-width: 768px) { .contacto-form { padding: 2.5rem; } }
+</style>

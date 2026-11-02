@@ -1,0 +1,48 @@
+---
+// Opiniones sobre pino con cresta y curvas de nivel, como entradas del libro de cumbre: titular y rejilla a todo el
+// ancho (1, 2 o 3 columnas) con pico naranja, la frase en letra condensada grande, quién lo dice y la `nota`
+// (actividad o fecha). Campos: `testimonios: [{texto, autor, nota}]`. No inventes opiniones. Sin opiniones no se pinta.
+import { seccion } from '../../data/site';
+import Seccion from '../ui/Seccion.astro';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const lista = s ? s.testimonios.filter((t) => t && t.texto) : [];
+---
+
+{
+  s && lista.length > 0 && (
+    <Seccion id={id} banda="pino" cresta curvas>
+      <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} partido />
+      <ul class:list={['op-rejilla', `op-rejilla--${Math.min(lista.length, 3)}`]}>
+        {lista.map((t) => (
+          <li class="op">
+            <figure>
+              <span class="op-pico" aria-hidden="true" />
+              <blockquote class="op-texto">«{t.texto}»</blockquote>
+              {(t.autor || t.nota) && (
+                <figcaption class="op-pie">
+                  {t.autor && <span class="op-autor">{t.autor}</span>}
+                  {t.nota && <span class="op-nota dato">{t.nota}</span>}
+                </figcaption>
+              )}
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </Seccion>
+  )
+}
+
+<style>
+  .op-rejilla { display: grid; gap: 0 3rem; }
+  @media (min-width: 768px) { .op-rejilla--2, .op-rejilla--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1100px) { .op-rejilla--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .op { padding-block: 2rem; border-top: 2px solid color-mix(in srgb, currentColor 30%, transparent); }
+  .op-pico { display: block; width: 2.2rem; height: 1.6rem; background: var(--c-acento); clip-path: polygon(0 100%, 35% 30%, 52% 55%, 72% 0, 100% 100%); }
+  .op-texto { margin-top: 1.25rem; font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 600; font-size: clamp(1.55rem, 2.6vw, 2.1rem); line-height: 1.12; }
+  .op-pie { margin-top: 1.5rem; display: grid; gap: .25rem; }
+  .op-autor { font-weight: 700; font-size: 1.05rem; }
+  .op-nota { opacity: .75; }
+</style>

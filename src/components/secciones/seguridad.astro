@@ -1,0 +1,56 @@
+---
+// Seguridad sobre pizarra con cresta y curvas de nivel: a la izquierda (fija al hacer scroll en escritorio) el
+// titular, el `texto` y el `cta` opcional; a la derecha, las dudas de seguridad abiertas en dos columnas, numeradas
+// y con triángulo de aviso (`preguntas: [{pregunta, respuesta}]`, propias de este apartado: no van al bloque de
+// preguntas frecuentes). Sin preguntas solo sale el titular.
+import { seccion, esExterno } from '../../data/site';
+import Seccion from '../ui/Seccion.astro';
+import Titular from '../ui/Titular.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const lista = s ? s.preguntas.filter((p) => p && p.pregunta) : [];
+---
+
+{
+  s && (
+    <Seccion id={id} banda="pizarra" cresta curvas>
+      <div class:list={['grid gap-10', { 'lg:grid-cols-12 lg:gap-16': lista.length > 0 }]}>
+        <div class="lg:col-span-4">
+          <div class="lg:sticky lg:top-28">
+            <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} class="!mb-0" />
+            {s.cta && (
+              <p class="mt-8">
+                <a class="btn" href={s.cta.url} {...(esExterno(s.cta.url) ? { target: '_blank', rel: 'noopener' } : {})}>{s.cta.texto}</a>
+              </p>
+            )}
+          </div>
+        </div>
+        {lista.length > 0 && (
+          <ol class="seg-lista lg:col-span-8">
+            {lista.map((p, i) => (
+              <li class="seg">
+                <p class="seg-num" aria-hidden="true">
+                  <Icono nombre="aviso" tam={22} />
+                  {String(i + 1).padStart(2, '0')}
+                </p>
+                <h3 class="seg-pregunta">{p.pregunta}</h3>
+                {p.respuesta && <p class="seg-respuesta">{p.respuesta}</p>}
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
+    </Seccion>
+  )
+}
+
+<style>
+  .seg-lista { display: grid; gap: 0 2.5rem; }
+  @media (min-width: 768px) { .seg-lista { grid-template-columns: 1fr 1fr; } }
+  .seg { padding-block: 1.6rem; border-top: 2px solid color-mix(in srgb, currentColor 25%, transparent); }
+  .seg-num { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: 1.1rem; letter-spacing: .1em; color: var(--c-acento); }
+  .seg-pregunta { margin-top: .6rem; font-size: clamp(1.5rem, 2.6vw, 2rem); }
+  .seg-respuesta { margin-top: .6rem; opacity: .85; }
+</style>

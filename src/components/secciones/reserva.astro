@@ -1,0 +1,75 @@
+---
+// Reserva partida 50/50 a sangre: a la izquierda, naranja chaleco con titular, `texto`, las etapas (`items:
+// [{titulo, texto}]`) unidas por una línea de sendero y el `cta` (p. ej. WhatsApp); a la derecha, sobre pizarra, el
+// formulario corto con fecha, personas, actividad y nivel. `niveles` = cadena con «;» (si falta, los de las
+// actividades); `boton_formulario` opcional.
+import { seccion, niveles, esExterno } from '../../data/site';
+import FormularioContacto from '../ui/FormularioContacto.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const pasos = s?.items.filter((it) => it && it.titulo) ?? [];
+const boton = (s?.boton_formulario as string) || 'Pedir plaza';
+const esWhatsapp = (u?: string) => /wa\.me|whatsapp/i.test(u ?? '');
+---
+
+{
+  s && (
+    <section id={id} class="reserva cresta">
+      <div class="res-izq banda-chaleco">
+        <div class="res-interior res-interior--izq mitad">
+          {s.antetitulo && <p class="antetitulo">{s.antetitulo}</p>}
+          {s.titulo && <h2 class="titulo-seccion">{s.titulo}</h2>}
+          {s.texto && <p class="mt-6 max-w-xl text-lg">{s.texto}</p>}
+          {pasos.length > 0 && (
+            <ol class="etapas">
+              {pasos.map((p, i) => (
+                <li class="etapa">
+                  <span class="etapa-num" aria-hidden="true">{i + 1}</span>
+                  <div>
+                    <h3 class="etapa-titulo">{p.titulo}</h3>
+                    {p.texto && <p class="etapa-texto">{p.texto}</p>}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          )}
+          {s.cta && (
+            <p class="mt-10">
+              <a class="btn" href={s.cta.url} {...(esExterno(s.cta.url) ? { target: '_blank', rel: 'noopener' } : {})}>
+                {esWhatsapp(s.cta.url) && <Icono nombre="whatsapp" tam={22} />}
+                {s.cta.texto}
+              </a>
+            </p>
+          )}
+        </div>
+      </div>
+      <div class="res-der banda-pizarra curvas">
+        <div class="res-interior res-interior--der">
+          <p class="res-form-titulo">{boton}</p>
+          <FormularioContacto prefijo={`${id}-f`} boton={boton} reserva niveles={niveles(s.niveles)} asunto={`Reserva: ${s.titulo || 'salida'}`} />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .reserva { display: grid; background: var(--c-acento); }
+  .res-interior { padding: var(--ritmo) 1rem; }
+  @media (min-width: 1024px) {
+    .reserva { grid-template-columns: 1fr 1fr; }
+    .res-interior { padding-block: var(--ritmo-md); }
+    .res-interior--izq { max-width: 45rem; margin-left: auto; padding-inline: 2rem clamp(2rem, 5vw, 5rem); }
+    .res-interior--der { max-width: 45rem; margin-right: auto; padding-inline: clamp(2rem, 5vw, 5rem) 2rem; }
+  }
+  @media (min-width: 768px) and (max-width: 1023px) { .res-interior { padding-inline: 2rem; } }
+  .etapas { position: relative; margin-top: 2.5rem; display: grid; gap: 1.5rem; }
+  .etapas::before { content: ""; position: absolute; left: 1.3rem; top: 1.5rem; bottom: 1.5rem; border-left: 3px dashed currentColor; opacity: .55; }
+  .etapa { position: relative; display: grid; grid-template-columns: 2.6rem 1fr; gap: 1rem; align-items: start; }
+  .etapa-num { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; background: var(--pizarra); color: var(--c-fondo); clip-path: polygon(50% 0, 100% 100%, 0 100%); padding-top: .7rem; font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: 1.05rem; line-height: 1; }
+  .etapa-titulo { font-size: 1.6rem; line-height: 1; }
+  .etapa-texto { margin-top: .3rem; }
+  .res-form-titulo { font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1; margin-bottom: 1.75rem; color: var(--c-acento); }
+</style>

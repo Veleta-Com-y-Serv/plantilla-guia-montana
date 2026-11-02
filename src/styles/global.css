@@ -1,0 +1,166 @@
+/* Guía de montaña y aventura — estilo aventurero: cuaderno de ruta. Verde pino + roca clara + naranja chaleco,
+   letra condensada en minúsculas (Bahnschrift, Roboto Condensed, Arial Narrow… del sistema), antetítulos con la
+   marca de sendero (dos rayas), bandas que se cortan con el perfil de una cresta, curvas de nivel en las bandas
+   oscuras, señales de poste con forma de flecha y fotos a sangre de borde a borde.
+   Todo sale de las cuatro variables de color: con fondo oscuro y texto claro el diseño se recoloca sin romperse. */
+@import "tailwindcss";
+@import "./comun.css";
+@config "../../tailwind.config.mjs";
+
+:root {
+  --fuente-texto: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fuente-titulos: "Bahnschrift Condensed", "Bahnschrift SemiCondensed", Bahnschrift, "Roboto Condensed", "Arial Narrow", "sans-serif-condensed", "Helvetica Neue", system-ui, sans-serif;
+  --radio: .25rem; --ritmo: 4.5rem; --ritmo-md: 7rem; --ancho: 90rem;
+  --alto-cabecera: 4.25rem;
+  --alto-cresta: clamp(1.1rem, 2.6vw, 2.6rem);
+  /* Letra sobre acento y primario: negra si el color es claro, blanca si es oscuro. */
+  --sobre-acento: #111;
+  --sobre-primario: #fff;
+  /* Bandas derivadas */
+  --pizarra: color-mix(in srgb, var(--c-texto) 86%, var(--c-primario));
+  --sima: color-mix(in srgb, var(--pizarra) 78%, #000);
+  --niebla: color-mix(in srgb, var(--c-fondo) 88%, var(--c-primario));
+  --roca: color-mix(in srgb, var(--c-fondo) 62%, var(--c-texto));
+  --linea: color-mix(in srgb, currentColor 18%, transparent);
+  /* Lo que resalta en cada banda (títulos, números, marcas) y su versión para texto pequeño (AA) */
+  --resalte: var(--c-acento);
+  --resalte-texto: color-mix(in srgb, var(--c-acento) 62%, var(--c-texto));
+  --curvas: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1200 800%22 preserveAspectRatio=%22xMidYMid slice%22%3E%3Cg fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.6%22%3E%3Cpath d=%22M897 330 L899 333 L899 335 L897 338 L895 340 L892 342 L889 344 L887 345 L885 346 L882 348 L880 350 L878 351 L876 352 L873 353 L870 353 L868 353 L865 353 L863 353 L860 353 L857 354 L855 354 L852 354 L849 354 L846 353 L844 353 L841 352 L838 351 L835 350 L831 349 L829 348 L826 346 L825 343 L825 340 L826 337 L828 335 L830 332 L832 330 L834 328 L835 326 L834 325 L834 322 L833 320 L833 318 L833 315 L835 313 L837 311 L839 310 L841 308 L843 307 L846 306 L848 304 L851 303 L854 302 L857 301 L860 301 L863 302 L866 303 L869 304 L871 305 L874 306 L876 308 L878 309 L880 311 L881 313 L881 316 L882 318 L882 320 L884 321 L886 322 L889 324 L892 326 L895 328Z%22/%3E%3Cpath d=%22M935 330 L938 335 L937 341 L935 346 L930 350 L924 354 L919 357 L913 360 L909 363 L905 366 L901 369 L896 371 L891 373 L886 375 L881 375 L875 376 L870 376 L865 377 L860 377 L855 378 L849 378 L844 378 L838 378 L833 377 L827 375 L822 374 L816 372 L809 371 L803 368 L797 365 L792 361 L790 356 L790 350 L792 345 L796 339 L801 334 L805 330 L808 326 L809 323 L809 319 L808 315 L806 310 L806 305 L807 300 L809 296 L813 292 L817 289 L822 286 L826 283 L831 280 L836 278 L842 275 L848 274 L854 273 L860 273 L866 274 L872 276 L877 278 L883 280 L888 282 L892 285 L896 289 L899 293 L901 297 L902 302 L903 306 L905 309 L908 312 L912 315 L918 318 L924 321 L931 325Z%22/%3E%3Cpath d=%22M974 330 L977 338 L976 346 L972 354 L964 360 L956 366 L948 370 L940 375 L933 379 L927 384 L921 388 L914 391 L906 394 L898 396 L891 397 L883 398 L875 399 L868 400 L860 402 L852 403 L844 404 L835 403 L827 402 L819 400 L811 398 L803 396 L794 393 L784 391 L774 388 L765 383 L759 377 L755 369 L755 360 L759 352 L766 343 L773 336 L779 330 L783 325 L784 319 L783 314 L781 307 L779 300 L779 292 L780 285 L784 279 L789 273 L795 268 L802 264 L809 259 L816 255 L824 251 L832 247 L841 246 L851 245 L860 246 L869 248 L878 250 L886 253 L894 255 L902 259 L909 263 L914 268 L919 274 L922 281 L924 287 L925 294 L927 299 L932 303 L939 307 L948 311 L958 316 L967 323Z%22/%3E%3Cpath d=%22M1013 330 L1017 341 L1015 352 L1009 362 L999 370 L988 378 L977 384 L967 390 L957 395 L949 401 L940 406 L931 411 L921 414 L911 417 L900 419 L890 420 L880 422 L870 425 L860 427 L849 429 L838 430 L827 429 L816 427 L805 424 L795 420 L784 417 L771 414 L759 411 L745 407 L734 401 L725 392 L721 382 L721 370 L727 359 L736 348 L745 338 L753 330 L758 323 L759 316 L757 308 L755 299 L752 290 L752 280 L754 270 L758 262 L765 254 L773 247 L782 240 L791 234 L801 228 L811 223 L823 219 L835 218 L848 218 L860 219 L872 222 L883 225 L894 228 L905 231 L915 235 L925 240 L933 247 L939 255 L942 264 L945 273 L947 281 L950 288 L956 294 L966 299 L978 305 L992 311 L1004 320Z%22/%3E%3Cpath d=%22M1052 330 L1056 344 L1054 357 L1045 370 L1033 380 L1019 389 L1006 397 L993 405 L982 412 L970 418 L959 424 L947 430 L935 434 L922 437 L910 439 L898 442 L886 446 L873 450 L860 453 L846 456 L832 456 L818 455 L805 452 L791 448 L778 443 L764 439 L749 435 L733 432 L717 426 L702 418 L692 408 L687 395 L688 380 L695 365 L706 352 L718 340 L727 330 L732 321 L734 312 L731 302 L728 292 L725 280 L724 267 L727 256 L733 245 L741 234 L750 225 L761 217 L772 208 L785 201 L799 195 L814 191 L829 190 L845 191 L860 193 L875 197 L889 200 L902 204 L916 207 L929 212 L941 218 L951 226 L958 236 L963 248 L966 259 L968 269 L973 278 L981 285 L994 291 L1009 298 L1026 307 L1041 317Z%22/%3E%3Cpath d=%22M1091 330 L1095 346 L1092 363 L1082 378 L1067 390 L1051 401 L1035 411 L1020 420 L1006 428 L992 435 L978 442 L963 448 L948 452 L934 456 L919 460 L905 464 L891 470 L876 475 L860 480 L843 483 L826 484 L809 482 L793 477 L778 471 L762 466 L745 461 L727 457 L708 452 L688 445 L671 436 L659 423 L653 407 L656 389 L665 372 L677 356 L691 342 L701 330 L707 319 L708 309 L705 297 L701 284 L698 269 L697 255 L700 241 L707 227 L716 215 L727 203 L739 192 L753 182 L769 173 L786 167 L804 163 L823 162 L842 164 L860 168 L877 173 L894 177 L910 180 L926 184 L942 189 L957 196 L969 205 L978 218 L983 231 L987 245 L990 257 L996 267 L1007 275 L1022 283 L1041 291 L1061 302 L1079 315Z%22/%3E%3Cpath d=%22M1130 330 L1134 349 L1130 368 L1118 385 L1101 400 L1083 413 L1064 424 L1047 434 L1030 444 L1013 452 L996 460 L979 465 L961 470 L945 475 L928 480 L912 486 L896 494 L879 501 L860 508 L840 512 L820 512 L800 509 L781 503 L764 495 L746 489 L726 483 L705 478 L682 472 L660 465 L640 453 L626 438 L621 419 L624 399 L635 378 L649 360 L664 344 L675 330 L681 317 L682 305 L678 291 L674 276 L670 259 L670 242 L674 226 L681 210 L691 195 L703 181 L718 167 L734 155 L752 145 L773 138 L795 135 L817 135 L839 139 L860 144 L880 149 L899 154 L918 157 L937 161 L956 166 L973 173 L987 185 L998 199 L1004 215 L1008 231 L1013 245 L1020 256 L1033 265 L1052 274 L1074 284 L1097 297 L1117 312Z%22/%3E%3Cpath d=%22M1169 330 L1173 352 L1167 373 L1153 393 L1135 410 L1114 425 L1093 438 L1073 449 L1053 460 L1034 469 L1014 476 L994 483 L974 488 L955 493 L937 500 L920 509 L902 519 L882 528 L860 536 L837 541 L814 541 L791 536 L770 528 L750 520 L729 511 L707 505 L683 499 L657 493 L631 484 L609 470 L594 453 L589 431 L593 408 L605 385 L622 364 L637 346 L649 330 L655 316 L655 301 L651 285 L646 268 L643 249 L643 230 L647 211 L655 192 L666 175 L679 158 L695 142 L714 128 L736 116 L760 109 L785 107 L811 109 L836 114 L860 120 L882 126 L904 131 L926 134 L948 137 L969 143 L989 151 L1005 164 L1017 180 L1025 198 L1030 216 L1035 232 L1045 245 L1060 255 L1082 265 L1108 277 L1134 291 L1155 309Z%22/%3E%3Cpath d=%22M1208 330 L1211 355 L1204 379 L1189 400 L1168 420 L1146 437 L1123 451 L1100 464 L1077 476 L1054 485 L1031 493 L1008 499 L986 505 L966 512 L947 520 L927 531 L907 544 L885 556 L860 566 L834 571 L807 570 L782 564 L758 554 L735 544 L713 534 L688 527 L661 520 L631 513 L603 502 L579 487 L563 467 L558 443 L563 416 L577 391 L594 367 L611 347 L623 330 L628 314 L628 297 L624 279 L619 260 L616 239 L616 217 L621 196 L629 175 L640 154 L655 134 L672 116 L694 100 L719 87 L746 80 L776 79 L806 83 L834 90 L860 98 L885 104 L909 109 L933 112 L958 114 L983 120 L1005 129 L1023 143 L1037 162 L1045 182 L1051 202 L1058 219 L1070 233 L1088 245 L1113 256 L1142 270 L1170 286 L1194 307Z%22/%3E%3Cpath d=%22M1246 330 L1249 357 L1240 384 L1224 408 L1202 430 L1177 448 L1152 465 L1126 479 L1100 491 L1074 501 L1047 509 L1022 515 L998 521 L976 529 L956 540 L935 554 L913 570 L888 585 L860 596 L830 601 L801 599 L772 592 L746 580 L721 568 L696 557 L669 549 L638 541 L606 533 L575 521 L549 504 L533 481 L528 454 L534 425 L549 397 L567 371 L584 349 L596 330 L601 312 L600 293 L596 273 L591 252 L588 229 L589 205 L594 181 L602 157 L614 133 L630 110 L649 89 L673 71 L701 58 L733 52 L767 52 L800 58 L831 67 L860 76 L887 83 L913 87 L941 89 L968 92 L996 97 L1021 107 L1041 123 L1056 143 L1066 165 L1073 187 L1082 206 L1096 221 L1117 234 L1145 247 L1177 262 L1207 281 L1232 304Z%22/%3E%3Cpath d=%22M1284 330 L1285 360 L1276 389 L1258 415 L1235 439 L1209 460 L1181 478 L1153 494 L1123 507 L1093 517 L1064 524 L1035 530 L1010 537 L986 547 L965 560 L943 577 L919 596 L891 614 L860 627 L827 632 L794 629 L763 620 L734 607 L707 593 L679 580 L649 571 L616 563 L581 553 L548 540 L521 520 L504 495 L499 465 L506 433 L522 403 L540 375 L557 351 L569 330 L573 310 L572 289 L568 267 L563 244 L561 218 L562 192 L567 166 L576 139 L588 112 L604 86 L625 62 L652 42 L684 28 L720 23 L758 25 L795 33 L829 44 L860 55 L889 62 L918 66 L948 67 L979 69 L1009 74 L1037 85 L1059 102 L1076 124 L1087 149 L1095 172 L1106 192 L1123 209 L1147 223 L1178 237 L1212 254 L1244 276 L1270 301Z%22/%3E%3Cpath d=%22M1321 330 L1322 362 L1311 394 L1292 423 L1268 449 L1240 472 L1211 492 L1179 509 L1146 522 L1112 532 L1079 539 L1049 545 L1021 553 L997 564 L974 581 L951 601 L925 623 L894 644 L860 658 L824 663 L787 660 L753 648 L722 633 L693 617 L662 604 L630 593 L594 584 L556 573 L521 558 L492 536 L475 508 L471 475 L479 441 L495 408 L514 379 L530 353 L541 330 L545 308 L543 285 L539 261 L535 235 L534 208 L535 180 L540 151 L549 121 L561 91 L578 61 L601 34 L631 13 L667 -1 L707 -6 L749 -2 L789 9 L826 22 L860 34 L892 42 L923 45 L955 46 L989 47 L1022 52 L1052 63 L1077 82 L1095 106 L1108 132 L1118 157 L1131 178 L1151 196 L1178 211 L1212 228 L1248 247 L1282 271 L1307 299Z%22/%3E%3Cpath d=%22M1357 330 L1357 365 L1346 399 L1326 430 L1301 458 L1272 484 L1240 506 L1205 523 L1169 537 L1131 547 L1095 554 L1061 560 L1032 569 L1007 582 L983 601 L959 625 L931 651 L898 674 L860 690 L820 695 L781 690 L744 677 L710 659 L678 642 L645 627 L610 616 L571 605 L531 593 L494 575 L465 551 L448 520 L444 485 L452 449 L468 414 L487 383 L502 355 L512 330 L515 306 L514 281 L510 255 L507 227 L506 198 L508 168 L513 136 L521 103 L534 69 L551 36 L577 6 L610 -17 L650 -31 L694 -34 L740 -28 L784 -14 L824 1 L860 14 L894 22 L927 24 L963 24 L999 24 L1035 29 L1068 42 L1095 62 L1114 87 L1129 115 L1142 141 L1157 163 L1180 182 L1210 199 L1246 217 L1285 239 L1319 265 L1344 296Z%22/%3E%3Cpath d=%22M1392 330 L1391 367 L1380 403 L1360 437 L1334 468 L1304 496 L1269 519 L1231 538 L1191 552 L1149 561 L1109 568 L1074 574 L1043 584 L1017 600 L993 622 L967 650 L937 680 L901 705 L860 722 L817 727 L774 721 L734 705 L698 686 L663 667 L628 651 L590 638 L549 627 L507 612 L469 593 L439 566 L422 532 L418 495 L427 456 L442 420 L460 386 L474 357 L482 330 L485 304 L484 277 L481 249 L479 219 L479 188 L481 155 L486 121 L494 84 L506 47 L525 10 L552 -22 L588 -47 L633 -60 L682 -62 L732 -53 L779 -37 L822 -20 L860 -6 L896 2 L932 4 L970 2 L1009 2 L1048 7 L1083 21 L1112 42 L1134 69 L1150 98 L1166 125 L1184 148 L1210 168 L1243 187 L1282 207 L1321 231 L1356 260 L1380 294Z%22/%3E%3Cpath d=%22M249 640 L249 642 L249 645 L248 647 L247 649 L245 651 L243 652 L240 653 L237 653 L235 654 L233 654 L232 655 L231 657 L230 659 L229 662 L227 664 L225 666 L223 667 L220 668 L217 667 L215 666 L213 665 L210 664 L208 663 L206 662 L204 661 L202 659 L201 658 L199 656 L198 654 L198 652 L198 650 L197 648 L197 646 L197 644 L196 642 L196 640 L196 638 L197 636 L197 634 L197 632 L197 630 L197 628 L197 625 L197 622 L198 620 L199 617 L201 616 L204 615 L207 616 L211 616 L213 618 L216 619 L218 619 L220 620 L222 619 L224 619 L226 619 L229 619 L231 619 L233 620 L234 621 L236 623 L238 624 L240 625 L242 626 L244 628 L245 629 L247 631 L248 633 L249 635 L249 638Z%22/%3E%3Cpath d=%22M278 640 L278 645 L277 649 L275 654 L273 657 L269 661 L264 663 L259 665 L254 666 L249 667 L246 668 L244 671 L242 674 L240 679 L238 684 L234 689 L230 693 L225 695 L220 695 L215 694 L210 692 L205 690 L201 688 L197 685 L192 683 L188 681 L185 678 L182 675 L179 671 L178 667 L176 663 L176 659 L175 655 L174 651 L173 648 L172 644 L172 640 L172 636 L173 632 L173 629 L174 625 L173 620 L173 615 L173 610 L173 604 L175 599 L178 595 L183 592 L189 591 L195 592 L202 594 L207 596 L212 598 L216 599 L220 599 L224 599 L228 598 L233 597 L237 597 L241 598 L245 600 L249 602 L253 605 L256 607 L260 609 L264 612 L268 615 L271 618 L274 622 L276 626 L277 631 L278 635Z%22/%3E%3Cpath d=%22M306 640 L306 647 L305 654 L303 660 L299 666 L293 671 L285 674 L277 677 L270 678 L264 680 L259 682 L256 686 L253 692 L251 700 L247 708 L242 715 L236 720 L228 723 L220 723 L212 721 L205 718 L198 715 L191 711 L185 708 L179 705 L173 701 L167 697 L163 692 L160 686 L157 680 L156 674 L154 668 L152 662 L151 657 L149 651 L148 646 L148 640 L148 634 L149 629 L150 623 L150 617 L149 610 L148 602 L148 594 L149 586 L152 578 L157 572 L165 568 L174 568 L184 569 L193 573 L201 576 L208 578 L214 579 L220 579 L226 578 L232 576 L239 576 L246 576 L252 578 L258 580 L264 583 L269 587 L275 590 L281 593 L287 597 L293 602 L297 607 L301 613 L304 620 L305 626 L306 633Z%22/%3E%3Cpath d=%22M334 640 L334 649 L333 658 L330 667 L324 674 L316 681 L306 685 L295 688 L285 690 L278 692 L272 696 L268 703 L265 712 L262 722 L257 732 L250 742 L241 748 L231 751 L220 751 L210 748 L200 744 L191 740 L182 735 L173 731 L165 727 L157 721 L151 715 L145 708 L141 700 L138 692 L135 685 L132 677 L130 670 L127 663 L125 655 L123 648 L123 640 L124 632 L125 625 L126 617 L125 609 L124 599 L123 589 L122 578 L124 566 L128 557 L136 549 L147 546 L160 545 L173 548 L185 552 L195 556 L204 559 L212 560 L220 559 L228 557 L237 555 L245 554 L254 555 L263 557 L271 560 L278 564 L286 568 L294 572 L303 577 L311 582 L318 589 L324 596 L328 604 L331 613 L333 622 L334 631Z%22/%3E%3Cpath d=%22M362 640 L362 651 L361 663 L356 673 L348 682 L338 690 L325 695 L312 699 L301 701 L292 705 L286 711 L282 720 L278 732 L274 745 L267 758 L258 769 L246 776 L233 779 L220 778 L207 774 L195 770 L183 764 L172 759 L162 754 L152 748 L142 741 L134 733 L128 724 L123 714 L119 705 L115 695 L111 686 L107 677 L103 669 L100 659 L98 650 L98 640 L99 630 L101 621 L101 611 L100 600 L98 588 L96 575 L96 561 L98 547 L105 535 L116 527 L130 523 L146 524 L162 528 L177 533 L190 537 L201 540 L210 540 L220 538 L230 535 L241 533 L252 532 L263 533 L273 536 L284 540 L294 544 L304 549 L314 554 L325 560 L335 567 L343 575 L350 585 L355 595 L358 606 L360 618 L361 629Z%22/%3E%3Cpath d=%22M390 640 L390 654 L388 667 L382 680 L372 690 L359 699 L344 705 L328 709 L315 713 L306 718 L300 726 L295 738 L292 753 L286 769 L278 784 L266 797 L252 804 L236 807 L220 805 L205 801 L190 795 L176 789 L163 783 L150 776 L138 769 L128 760 L119 750 L111 739 L105 728 L100 716 L95 706 L89 695 L84 685 L78 674 L75 663 L73 652 L73 640 L75 628 L76 617 L76 605 L75 592 L72 577 L69 561 L69 544 L73 528 L82 514 L96 506 L114 502 L133 503 L152 508 L169 514 L184 518 L197 521 L208 520 L220 517 L232 514 L245 511 L258 511 L271 512 L284 515 L297 519 L309 524 L322 529 L335 535 L348 542 L359 551 L369 562 L376 574 L381 587 L384 600 L387 613 L389 627Z%22/%3E%3Cpath d=%22M418 640 L418 656 L415 671 L408 686 L395 698 L379 707 L361 714 L344 719 L330 724 L320 731 L314 742 L310 757 L306 775 L299 794 L289 811 L274 825 L257 833 L239 835 L220 832 L202 827 L185 820 L169 813 L154 806 L139 798 L125 789 L113 778 L103 766 L95 754 L88 741 L81 728 L74 716 L67 705 L60 693 L53 681 L49 667 L48 654 L48 640 L50 626 L51 613 L51 599 L48 583 L44 565 L41 546 L41 526 L47 508 L59 494 L77 485 L98 482 L121 484 L143 490 L162 496 L179 500 L193 502 L207 500 L220 496 L234 492 L249 489 L265 489 L280 490 L295 494 L310 498 L325 503 L341 509 L356 516 L371 525 L384 535 L395 548 L402 563 L407 578 L410 594 L413 609 L416 624Z%22/%3E%3C/g%3E%3C/svg%3E");
+}
+@supports (color: oklch(from red l c h)) {
+  :root {
+    --sobre-acento: oklch(from var(--c-acento) clamp(0, (0.6 - l) * 100, 1) 0 0);
+    --sobre-primario: oklch(from var(--c-primario) clamp(0, (0.7 - l) * 100, 1) 0 0);
+  }
+}
+
+@layer base {
+  body { font-family: var(--fuente-texto); font-size: 1.0625rem; line-height: 1.6; background: var(--c-fondo); }
+  h1, h2, h3 { font-family: var(--fuente-titulos); font-weight: 700; font-stretch: 75%; font-synthesis: none; letter-spacing: -.012em; line-height: .95; }
+  html { scroll-padding-top: calc(var(--alto-cabecera) + 1rem); }
+  main { padding-top: var(--alto-cabecera); }
+  ::selection { background: var(--c-acento); color: var(--sobre-acento); }
+}
+
+@layer components {
+  /* Bandas de color pleno, de borde a borde */
+  .banda-roca { background: var(--c-fondo); color: var(--c-texto); }
+  .banda-niebla { background: var(--niebla); color: var(--c-texto); }
+  .banda-pino { background: var(--c-primario); color: var(--sobre-primario); --resalte: var(--c-acento); --resalte-texto: color-mix(in srgb, var(--c-acento) 55%, var(--sobre-primario)); }
+  .banda-pizarra { background: var(--pizarra); color: var(--c-fondo); --resalte: var(--c-acento); --resalte-texto: color-mix(in srgb, var(--c-acento) 70%, var(--c-fondo)); }
+  .banda-chaleco { background: var(--c-acento); color: var(--sobre-acento); --resalte: var(--sobre-acento); --resalte-texto: var(--sobre-acento); }
+
+  /* Perfil de cresta: la banda sube por encima de la anterior con el contorno de una sierra (mismo fondo) */
+  .cresta { position: relative; }
+  .cresta::before { content: ""; position: absolute; left: 0; right: 0; bottom: calc(100% - 1px); height: var(--alto-cresta); background: inherit; pointer-events: none; z-index: 1;
+    clip-path: polygon(0 100%, 0 62%, 4% 38%, 7% 52%, 12% 14%, 16% 40%, 20% 30%, 25% 62%, 31% 24%, 35% 36%, 41% 0, 46% 34%, 50% 22%, 56% 58%, 62% 18%, 66% 30%, 71% 8%, 76% 44%, 81% 32%, 87% 60%, 92% 26%, 96% 42%, 100% 20%, 100% 100%); }
+  .cresta--suave::before { clip-path: polygon(0 100%, 0 70%, 9% 46%, 18% 60%, 30% 26%, 42% 54%, 55% 34%, 66% 58%, 78% 18%, 89% 50%, 100% 36%, 100% 100%); }
+
+  /* Curvas de nivel en las bandas oscuras (máscara con el color del texto, muy suave) */
+  .curvas { position: relative; isolation: isolate; }
+  .curvas::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: currentColor; opacity: .09;
+    -webkit-mask: var(--curvas) right center / cover no-repeat; mask: var(--curvas) right center / cover no-repeat; }
+
+  /* Titulares: marca de sendero (raya clara sobre raya de color) + antetítulo en versalitas condensadas */
+  .antetitulo { display: inline-flex; align-items: center; gap: .7rem; font-family: var(--fuente-titulos); font-stretch: 75%; font-size: .9rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+  .antetitulo::before { content: ""; flex-shrink: 0; width: 1.6rem; height: .7rem; background: linear-gradient(currentColor 0 45%, transparent 45% 55%, var(--resalte) 55%); opacity: 1; }
+  .titulo-seccion { font-size: clamp(2.6rem, 8.5vw, 6rem); margin-top: .6rem; overflow-wrap: normal; hyphens: auto; }
+  .titular { margin-bottom: 3rem; max-width: 56rem; }
+  @media (min-width: 768px) { .mitad .titulo-seccion { font-size: clamp(2.6rem, 5vw, 5.25rem); } }
+  .titular-texto { margin-top: 1.1rem; font-size: 1.15rem; max-width: 38rem; opacity: .85; }
+  @media (min-width: 1024px) {
+    .titular--partido { max-width: none; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 4rem; align-items: end; }
+    .titular--partido .titular-texto { margin-top: 0; padding-bottom: .4rem; }
+  }
+  .resalte { color: var(--resalte); }
+  .dato { font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; font-size: .82rem; }
+
+  /* Botones: bloque con la esquina cortada (como una etiqueta de material) */
+  .btn, .btn-sec { font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-synthesis: none; text-transform: uppercase; letter-spacing: .08em; font-size: 1.05rem; min-height: 3rem; padding-inline: 1.5rem 1.8rem; border: 2px solid transparent; border-radius: 0; }
+  .btn {
+    clip-path: polygon(0 0, calc(100% - .85rem) 0, 100% .85rem, 100% 100%, 0 100%); }
+  .btn:focus-visible, .btn-sec:focus-visible { outline: 3px solid currentColor; outline-offset: -6px; }
+  .btn { background: var(--c-acento); color: var(--sobre-acento); }
+  .btn:hover { background: color-mix(in srgb, var(--c-acento) 85%, var(--c-texto)); }
+  .banda-chaleco .btn { background: var(--pizarra); color: var(--c-fondo); }
+  .btn-sec { color: inherit; border-color: currentColor; background: transparent; }
+  .btn-sec:hover { background: color-mix(in srgb, currentColor 12%, transparent); }
+  .acciones { display: flex; flex-wrap: wrap; gap: .85rem 1rem; }
+
+  /* Picos del nivel (1-3) */
+  .nivel { display: inline-flex; align-items: center; gap: .5rem; }
+  .nivel-picos { display: inline-flex; gap: 2px; }
+  .nivel-picos i { width: .8rem; height: .7rem; background: color-mix(in srgb, currentColor 28%, transparent); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+  .nivel-picos i.lleno { background: var(--c-acento); }
+
+  /* Estado de una salida */
+  .estado { display: inline-flex; align-items: center; gap: .4rem; padding: .25rem .6rem; font-family: var(--fuente-titulos); font-stretch: 75%; font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; border: 1.5px solid currentColor; border-radius: 2px; }
+  .estado--ultimas { background: var(--c-acento); color: var(--sobre-acento); border-color: var(--c-acento); }
+  .estado--completo { opacity: .65; text-decoration: line-through; }
+
+  /* Cabecera fija a todo el ancho: transparente sobre la portada y pizarra al hacer scroll (script en Header.astro) */
+  .cabecera--cumbre { position: fixed; top: 0; left: 0; right: 0; background: var(--pizarra); color: var(--c-fondo); border-bottom: 3px solid var(--c-acento); transition: background-color .25s ease, border-color .25s ease; }
+  .cabecera--cumbre.es-transparente { background: linear-gradient(180deg, color-mix(in srgb, var(--sima) 70%, transparent), transparent); border-color: transparent; }
+  .cabecera--cumbre .cabecera-fila { min-height: var(--alto-cabecera); gap: .75rem; }
+  .cabecera--cumbre .marca-pico { position: relative; display: grid; place-items: end center; width: 2.6rem; height: 2.3rem; flex-shrink: 0; background: var(--c-acento); color: var(--sobre-acento); clip-path: polygon(50% 0, 100% 100%, 0 100%); font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: 1.05rem; line-height: 1; padding-bottom: .2rem; }
+  .cabecera--cumbre .marca-nombre { font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: 1.6rem; letter-spacing: -.01em; line-height: 1; }
+  .cabecera--cumbre .cabecera-nav { gap: 1.6rem; }
+  .cabecera--cumbre .cabecera-nav a { font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; font-size: .92rem; padding-block: .5rem; border-bottom: 2px solid transparent; }
+  .cabecera--cumbre .cabecera-nav a:hover { border-bottom-color: var(--c-acento); }
+  .cabecera--cumbre .cabecera-wa { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; min-width: 2.75rem; min-height: 2.75rem; padding-inline: .6rem; text-decoration: none; border: 2px solid currentColor; border-radius: 2px; font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: .9rem; }
+  .cabecera--cumbre .cabecera-wa:hover { background: color-mix(in srgb, currentColor 14%, transparent); }
+  .cabecera--cumbre .cabecera-wa span { display: none; }
+  @media (min-width: 640px) { .cabecera--cumbre .cabecera-wa span { display: inline; } .cabecera--cumbre .cabecera-wa { padding-inline: .85rem; } }
+  .cabecera--cumbre .cabecera-cta { min-height: 2.75rem; font-size: .95rem; padding-inline: 1.1rem 1.4rem; }
+  .cabecera--cumbre .menu-movil summary { min-height: 2.75rem; padding-inline: .8rem; font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; font-size: .9rem; background: var(--c-acento); color: var(--sobre-acento); border-radius: 2px; }
+  .cabecera--cumbre .menu-movil-panel { background: var(--pizarra); color: var(--c-fondo); border-bottom: 4px solid var(--c-acento); padding: .5rem 1rem 1.5rem; max-height: calc(100svh - var(--alto-cabecera)); overflow-y: auto; }
+  .cabecera--cumbre .menu-movil-panel a:not(.btn) { font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: 1.9rem; line-height: 1.1; padding-block: .6rem; border-bottom-color: color-mix(in srgb, currentColor 14%, transparent); }
+  .cabecera--cumbre .menu-movil-panel .btn { margin-top: 1.25rem; }
+  @media (min-width: 1100px) {
+    .cabecera--cumbre .cabecera-nav { display: flex; }
+    .cabecera--cumbre .cabecera-cta { display: inline-flex; }
+    .cabecera--cumbre .menu-movil { display: none; }
+  }
+  @media (max-width: 1099px) {
+    .cabecera--cumbre .cabecera-nav, .cabecera .cabecera-cta { display: none !important; }
+    .cabecera--cumbre .menu-movil { display: block !important; }
+  }
+
+  /* Formulario: campos con fondo suave y raya de color abajo */
+  .campo label { font-family: var(--fuente-titulos); font-stretch: 75%; text-transform: uppercase; letter-spacing: .14em; font-size: .85rem; font-weight: 700; }
+  .campo input, .campo textarea, .campo select { width: 100%; min-height: 3rem; font: inherit; color: inherit; background: color-mix(in srgb, currentColor 7%, transparent); padding: .75rem .9rem; border: 0; border-bottom: 2px solid color-mix(in srgb, currentColor 45%, transparent); border-radius: 2px 2px 0 0; }
+  .campo select option { background: var(--c-fondo); color: var(--c-texto); }
+  .campo input:focus, .campo textarea:focus, .campo select:focus { outline: none; border-bottom-color: var(--c-acento); background: color-mix(in srgb, currentColor 11%, transparent); }
+  .campo-doble { display: grid; gap: 1rem; }
+  @media (min-width: 640px) { .campo-doble { grid-template-columns: 1fr 1fr; } }
+  .campo-check input { width: 1.25rem; height: 1.25rem; accent-color: var(--c-acento); }
+  .formulario .btn { margin-top: .5rem; }
+  .formulario a { text-decoration: underline; }
+
+  /* Pie: sima (casi negro verdoso) con cresta y curvas de nivel, columnas y barra móvil Llamar / WhatsApp */
+  .pie--cumbre { background: var(--sima); color: var(--c-fondo); padding-top: 0; }
+  .pie--cumbre .pie-cuerpo { padding-top: 4rem; }
+  .pie--cumbre .pie-titulo { color: var(--c-acento); opacity: 1; font-family: var(--fuente-titulos); font-stretch: 75%; font-size: .85rem; letter-spacing: .2em; font-weight: 700; }
+  .pie--cumbre .pie-nombre { font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: 2.2rem; line-height: 1; }
+  .pie--cumbre .pie-rejilla { gap: 2.5rem; }
+  @media (min-width: 768px) { .pie--cumbre .pie-rejilla { grid-template-columns: 1.6fr 1.2fr 1fr 1.2fr; } }
+  .pie--cumbre .pie-redes a { border: 1.5px solid currentColor; border-radius: 2px; padding: .55rem; }
+  .pie--cumbre .pie-redes a:hover { background: var(--c-acento); color: var(--sobre-acento); border-color: var(--c-acento); }
+  .barra-movil { position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; box-shadow: 0 -6px 18px rgb(0 0 0 / .18); }
+  .barra-movil a { display: flex; align-items: center; justify-content: center; gap: .55rem; min-height: 3.5rem; font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: 1.15rem; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; }
+  .barra-llamar { background: var(--c-primario); color: var(--sobre-primario); }
+  .barra-whatsapp { background: var(--c-acento); color: var(--sobre-acento); }
+  body:has(.barra-movil) { padding-bottom: 3.5rem; }
+  @media (min-width: 768px) { .barra-movil { display: none; } body:has(.barra-movil) { padding-bottom: 0; } }
+
+  .texto-largo h2 { font-size: 2rem; }
+  .texto-largo a:not(.btn) { color: var(--resalte-texto); }
+}
+
+@layer components {
+  /* Cabecera en móvil: nombre algo más pequeño para que quepan WhatsApp y el menú */
+  @media (max-width: 639px) {
+    .cabecera--cumbre .marca-nombre { font-size: 1.35rem; }
+    .cabecera--cumbre .menu-movil summary { letter-spacing: .08em; padding-inline: .7rem; }
+  }
+}

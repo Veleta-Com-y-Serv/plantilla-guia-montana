@@ -1,0 +1,94 @@
+# Metadatos de la plantilla para el catálogo de NoExpertise.
+id: guia-montana
+nombre: Guía de montaña y aventura
+descripcion: "Web de guía de montaña: actividades por nivel, salidas con plazas, material, seguridad y reserva por WhatsApp."
+sectores:
+  - { id: guia-montana, nombre: Guía de montaña }
+  - { id: senderismo, nombre: Senderismo }
+  - { id: escalada, nombre: Escalada }
+  - { id: barranquismo, nombre: Barranquismo }
+  - { id: esqui-travesia, nombre: Esquí de travesía }
+  - { id: aventura, nombre: Turismo de aventura }
+secciones:
+  - { id: hero, nombre: Portada }
+  - { id: actividades, nombre: Actividades }
+  - { id: salidas, nombre: Próximas salidas }
+  - { id: guia, nombre: Sobre mí }
+  - { id: material, nombre: Material incluido }
+  - { id: seguridad, nombre: Seguridad }
+  - { id: zonas, nombre: Dónde guío }
+  - { id: galeria, nombre: Galería }
+  - { id: opiniones, nombre: Opiniones }
+  - { id: preguntas, nombre: Preguntas frecuentes }
+  - { id: reserva, nombre: Reserva }
+  - { id: contacto, nombre: Contacto }
+estilo: aventurero
+plan_minimo: gratis
+version: 1.0.0
+base: astrowind
+demo_url: https://demo-plantilla-guia-montana.noexpertise.com
+activa: true
+orden: 630
+
+# Asistente de puesta en marcha (NoExpertise): un paso por pantalla. Rutas del site sin índices;
+# tipos: texto y lista (la IA propone), datos, fotos, eleccion (colores y logo) y repaso.
+asistente:
+  - id: negocio
+    titulo: "Tu negocio"
+    pregunta: "¿Cómo te llamas o cómo se llama tu negocio, qué actividades guías y en qué zona?"
+    ayuda: "Por ejemplo: guía de montaña en Benasque, ascensiones, senderismo y barrancos para grupos pequeños."
+    tipo: texto
+    campos: [nombre, eslogan, secciones.hero.antetitulo, secciones.hero.titulo, secciones.hero.texto, secciones.hero.items, seo.titulo, seo.descripcion]
+  - id: contacto
+    titulo: "Cómo te reservan"
+    pregunta: "¿En qué teléfono y WhatsApp te pueden llamar o escribir para reservar?"
+    ayuda: "El teléfono y el WhatsApp salen en la barra fija del móvil. Lo que dejes vacío no sale en tu web."
+    tipo: datos
+    campos: [contacto.telefono, contacto.whatsapp, contacto.email, contacto.direccion, contacto.horario, redes.instagram, redes.facebook]
+  - id: actividades
+    titulo: "Tus actividades"
+    pregunta: "¿Qué actividades ofreces? Nombre, en qué consiste, nivel, duración, temporada y precio por persona si quieres. Una por línea."
+    ayuda: "Si lo prefieres, añádelas luego en Contenido, con su foto."
+    tipo: lista
+    campos: [secciones.actividades.actividades]
+  - id: salidas
+    titulo: "Salidas con fecha"
+    pregunta: "¿Tienes salidas en grupo con fecha fija? Fecha, actividad, lugar, plazas y precio. Una por línea."
+    ayuda: "Si no haces salidas con fecha, sáltate este paso y oculta el apartado en Contenido."
+    tipo: lista
+    campos: [secciones.salidas.salidas]
+  - id: guia
+    titulo: "Sobre ti"
+    pregunta: "Cuéntanos quién eres: desde cuándo guías, cómo trabajas y qué titulación, licencia y seguro tienes."
+    tipo: texto
+    campos: [secciones.guia.titulo, secciones.guia.texto, secciones.guia.items]
+  - id: material
+    titulo: "Material incluido"
+    pregunta: "¿Qué material pones tú y qué tiene que traer el cliente?"
+    tipo: texto
+    campos: [secciones.material.titulo, secciones.material.texto, secciones.material.items, secciones.material.nota]
+  - id: seguridad
+    titulo: "Seguridad"
+    pregunta: "¿Qué te preguntan sobre seguridad? Mal tiempo, cuántas personas por guía, seguros… Escribe cada pregunta y lo que respondes."
+    tipo: lista
+    campos: [secciones.seguridad.preguntas]
+  - id: preguntas
+    titulo: "Preguntas frecuentes"
+    pregunta: "¿Qué te preguntan antes de reservar? Experiencia, edad, cómo se paga, dónde quedáis… Escribe cada pregunta y lo que respondes."
+    ayuda: "Si lo prefieres, añádelas luego en Contenido."
+    tipo: lista
+    campos: [secciones.preguntas.preguntas]
+  - id: fotos
+    titulo: "Tus fotos"
+    pregunta: "Pon una foto de portada de tus montañas y, si quieres, alguna más tuya y de tus salidas (mejor sin caras)."
+    ayuda: "Sube las tuyas o elige una del banco. Las que no cambies se quedan como están."
+    tipo: fotos
+    campos: [secciones.hero.imagen, secciones.guia.imagen, secciones.galeria.galeria]
+  - id: aspecto
+    titulo: "Colores y logo"
+    pregunta: "Elige los colores de tu web y, si tienes, tu logo."
+    tipo: eleccion
+    campos: [colores.primario, colores.acento, logo]
+  - id: repaso
+    titulo: "Repaso"
+    tipo: repaso

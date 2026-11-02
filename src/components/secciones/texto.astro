@@ -1,0 +1,70 @@
+---
+// Apartado de texto genérico sobre niebla con cresta suave: antetítulo, título condensado, párrafos, lista (`items`
+// con icono) y botón. Con `imagen`, fila 50/50 con la foto a sangre hasta el borde derecho. Lo usan los apartados
+// nuevos que pide el cliente (site.yaml: `tipo: texto`).
+import { seccion, parrafos, esExterno } from '../../data/site';
+import { altSeccion } from '../../lib/seo';
+import Imagen from '../ui/Imagen.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const items = s?.items.filter((it) => it && it.titulo) ?? [];
+---
+
+{
+  s && (
+    <section id={id} class:list={['banda-niebla cresta cresta--suave texto-banda', { 'texto-banda--foto': s.imagen }]}>
+      <div class="texto-cuerpo">
+        <div class:list={['texto-interior', { contenedor: !s.imagen, mitad: s.imagen }]}>
+          {s.antetitulo && <p class="antetitulo">{s.antetitulo}</p>}
+          {s.titulo && <h2 class="titulo-seccion">{s.titulo}</h2>}
+          <div class="mt-6 max-w-3xl space-y-4 text-lg">
+            {parrafos(s.texto).map((p) => <p>{p}</p>)}
+          </div>
+          {items.length > 0 && (
+            <ul class="texto-items">
+              {items.map((it) => (
+                <li class="texto-item">
+                  <Icono nombre={it.icono || 'check'} tam={24} class="texto-item-icono" />
+                  <div>
+                    <h3 class="texto-item-titulo">{it.titulo}</h3>
+                    {it.texto && <p class="mt-1 opacity-80">{it.texto}</p>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+          {s.cta && (
+            <p class="mt-9">
+              <a class="btn" href={s.cta.url} {...(esExterno(s.cta.url) ? { target: '_blank', rel: 'noopener' } : {})}>{s.cta.texto}</a>
+            </p>
+          )}
+        </div>
+      </div>
+      {s.imagen && (
+        <div class="texto-foto">
+          <Imagen src={s.imagen} alt={altSeccion(s)} ancho={1400} alto={1050} class="h-full w-full object-cover" />
+        </div>
+      )}
+    </section>
+  )
+}
+
+<style>
+  .texto-banda { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .texto-cuerpo { padding-block: var(--ritmo); }
+  .texto-foto { aspect-ratio: 4 / 3; background: var(--c-primario); }
+  .texto-interior.mitad { padding-inline: 1rem; }
+  .texto-items { margin-top: 2rem; display: grid; gap: 1.1rem; }
+  @media (min-width: 768px) { .texto-items { grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; } .texto-cuerpo { padding-block: var(--ritmo-md); } .texto-interior.mitad { padding-inline: 2rem; } }
+  .texto-item { display: grid; grid-template-columns: auto 1fr; gap: .8rem; padding-left: .9rem; border-left: 4px solid var(--c-acento); }
+  .texto-item :global(.texto-item-icono) { color: var(--c-primario); }
+  .texto-item-titulo { font-size: 1.4rem; line-height: 1.05; }
+  @media (min-width: 1024px) {
+    .texto-banda--foto { grid-template-columns: 1fr 1fr; }
+    .texto-banda--foto .texto-interior { max-width: 45rem; margin-left: auto; padding-inline: 2rem clamp(2rem, 5vw, 5rem); }
+    .texto-foto { aspect-ratio: auto; min-height: 100%; }
+    .texto-banda--foto .texto-items { grid-template-columns: 1fr; }
+  }
+</style>

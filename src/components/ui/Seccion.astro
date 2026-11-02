@@ -1,0 +1,24 @@
+---
+// Banda de sección a todo el ancho de la ventana. Adaptado de AstroWind (WidgetWrapper.astro), © onWidget, licencia MIT (LICENSE-ASTROWIND.md).
+// `banda` elige el fondo de color pleno (roca, niebla, pino, pizarra o chaleco); `cresta` corta el borde de arriba con
+// el perfil de una sierra; `curvas` pinta curvas de nivel suaves. El contenido va dentro de `.contenedor` (máximo
+// 90 rem, 16 px de margen lateral en móvil). `sinContenedor` para filas a sangre.
+interface Props {
+  id?: string; class?: string; contenedor?: string;
+  banda?: 'roca' | 'niebla' | 'pino' | 'pizarra' | 'chaleco';
+  cresta?: boolean | 'suave'; curvas?: boolean; etiqueta?: string; sinContenedor?: boolean;
+}
+const { id, class: clase = '', contenedor = '', banda = 'roca', cresta = false, curvas = false, etiqueta, sinContenedor = false } = Astro.props;
+---
+
+<section class:list={['seccion', `banda-${banda}`, { cresta, 'cresta--suave': cresta === 'suave', curvas }, clase]} id={id} aria-label={etiqueta}>
+  {
+    sinContenedor ? (
+      <slot />
+    ) : (
+      <div class:list={['contenedor', contenedor]}>
+        <slot />
+      </div>
+    )
+  }
+</section>

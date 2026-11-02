@@ -1,0 +1,118 @@
+---
+// Portada a pantalla completa: foto de montaña a sangre con velo de sima abajo a la izquierda, título condensado
+// enorme (la última palabra en naranja), `texto`, `cta` y `cta_secundario` (si es WhatsApp, con su icono).
+// A la derecha, un poste de señales de sendero: la primera, naranja, con la próxima salida (sale sola de la
+// sección «salidas»); después, una señal por cada `items` ({titulo, icono}). Sin foto: fondo pino con curvas de nivel.
+// Si es la primera sección, sube bajo la cabecera.
+import { seccion, proximaSalida, esExterno } from '../../data/site';
+import { altHero } from '../../lib/seo';
+import Imagen from '../ui/Imagen.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const palabras = (s?.titulo ?? '').trim().split(/\s+/).filter(Boolean);
+const ultima = palabras.length > 1 ? palabras.pop() : '';
+const principio = palabras.join(' ');
+const proxima = proximaSalida();
+const senales = s?.items.filter((it) => it && it.titulo) ?? [];
+const esWhatsapp = (u?: string) => /wa\.me|whatsapp/i.test(u ?? '');
+const fuera = (u?: string) => (esExterno(u) ? { target: '_blank', rel: 'noopener' } : {});
+---
+
+{
+  s && (
+    <section id={id} class:list={['portada relative isolate overflow-hidden', { 'portada--primera': primera, 'portada--sin-foto curvas': !s.imagen }]}>
+      {s.imagen && (
+        <div class="absolute inset-0 -z-20">
+          <Imagen src={s.imagen} alt={altHero()} ancho={1920} alto={1080} prioridad={primera} class="portada-img h-full w-full object-cover" />
+        </div>
+      )}
+      <div class="portada-velo absolute inset-0 -z-10" aria-hidden="true" />
+      <div class="contenedor portada-cuerpo">
+        <div class="portada-texto">
+          {s.antetitulo && <p class="antetitulo">{s.antetitulo}</p>}
+          {s.titulo && (
+            <h1 class="portada-titulo">
+              {principio}
+              {ultima && (
+                <>
+                  {' '}
+                  <span class="resalte">{ultima}</span>
+                </>
+              )}
+            </h1>
+          )}
+          {s.texto && <p class="portada-parrafo">{s.texto}</p>}
+          {(s.cta || s.cta_secundario) && (
+            <div class="acciones mt-8">
+              {s.cta && <a class="btn" href={s.cta.url} {...fuera(s.cta.url)}>{s.cta.texto}</a>}
+              {s.cta_secundario && (
+                <a class="btn-sec" href={s.cta_secundario.url} {...fuera(s.cta_secundario.url)}>
+                  {esWhatsapp(s.cta_secundario.url) && <Icono nombre="whatsapp" tam={22} />}
+                  {s.cta_secundario.texto}
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+        {(proxima || senales.length > 0) && (
+          <div class="poste" aria-label="De un vistazo">
+            <span class="poste-palo" aria-hidden="true" />
+            <ul class="poste-senales">
+              {proxima && (
+                <li>
+                  <a class="senal senal--salida" href={`#${proxima.ancla}`}>
+                    <span class="senal-sup">Próxima salida · {proxima.fecha}</span>
+                    <span class="senal-txt">{proxima.titulo || proxima.lugar}</span>
+                  </a>
+                </li>
+              )}
+              {senales.map((it, i) => (
+                <li>
+                  <span class:list={['senal', i % 2 ? 'senal--roca' : 'senal--pino']}>
+                    <Icono nombre={it.icono || 'montana'} tam={20} />
+                    <span class="senal-txt">{it.titulo}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .portada { min-height: max(85svh, 34rem); display: flex; flex-direction: column; background: var(--c-primario); color: #fff; --resalte: var(--c-acento); }
+  .portada--primera { margin-top: calc(-1 * var(--alto-cabecera)); min-height: max(100svh, 38rem); }
+  .portada--sin-foto { color: var(--sobre-primario); }
+  .portada-img { object-position: center 40%; }
+  .portada-velo { background:
+    linear-gradient(0deg, color-mix(in srgb, var(--sima) 88%, transparent) 0%, color-mix(in srgb, var(--sima) 45%, transparent) 38%, transparent 70%),
+    linear-gradient(90deg, color-mix(in srgb, var(--sima) 55%, transparent), transparent 70%); }
+  .portada--sin-foto .portada-velo { display: none; }
+  .portada-cuerpo { position: relative; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 2.5rem; padding-top: 6rem; padding-bottom: calc(3rem + var(--alto-cresta)); }
+  .portada--primera .portada-cuerpo { padding-top: calc(var(--alto-cabecera) + 4rem); }
+  @media (min-width: 1024px) { .portada-cuerpo { flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 3rem; padding-bottom: calc(4.5rem + var(--alto-cresta)); } }
+  .portada-texto { max-width: 60rem; min-width: 0; }
+  .portada-titulo { margin-top: 1rem; font-size: clamp(3.2rem, 14vw, 9rem); line-height: .86; letter-spacing: -.02em; text-shadow: 0 2px 28px rgb(0 0 0 / .35); }
+  .portada-parrafo { margin-top: 1.4rem; max-width: 36rem; font-size: 1.125rem; text-shadow: 0 1px 12px rgb(0 0 0 / .4); }
+  @media (min-width: 768px) { .portada-parrafo { font-size: 1.3rem; } }
+
+  /* Poste de señales de sendero */
+  .poste { position: relative; flex-shrink: 0; padding-left: 1.1rem; }
+  .poste-palo { position: absolute; left: .35rem; top: -.75rem; bottom: -3rem; width: .45rem; background: color-mix(in srgb, var(--c-fondo) 85%, var(--c-texto)); border-radius: 2px; }
+  .poste-senales { position: relative; display: grid; gap: .45rem; justify-items: start; }
+  .senal { display: inline-flex; align-items: center; gap: .6rem; min-height: 2.75rem; padding: .45rem 2.1rem .45rem .9rem; text-decoration: none; font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: 1.05rem; line-height: 1.05; text-transform: uppercase; letter-spacing: .06em;
+    clip-path: polygon(0 0, calc(100% - 1.1rem) 0, 100% 50%, calc(100% - 1.1rem) 100%, 0 100%); box-shadow: inset 0 0 0 0 transparent; }
+  .senal--pino { background: var(--c-primario); color: var(--sobre-primario); }
+  .senal--roca { background: var(--c-fondo); color: var(--c-texto); }
+  .senal--salida { display: grid; gap: .15rem; padding-block: .7rem; background: var(--c-acento); color: var(--sobre-acento); font-size: 1.3rem; }
+  .senal--salida:focus-visible { outline: 3px solid currentColor; outline-offset: -6px; }
+  .senal-sup { font-size: .78rem; letter-spacing: .14em; }
+  .senal :global(svg) { flex-shrink: 0; }
+  @media (min-width: 1024px) { .poste { width: 22rem; margin-bottom: 1rem; } .senal { font-size: 1.15rem; } .senal--salida { font-size: 1.5rem; } }
+  @media (max-width: 1023px) { .poste-palo { bottom: -1rem; } }
+</style>

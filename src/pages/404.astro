@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base titulo="Página no encontrada">
+  <section class="banda-pino curvas error-banda">
+    <div class="contenedor error-cuerpo">
+      <p class="antetitulo">Error 404</p>
+      <p class="error-cifra" aria-hidden="true">404</p>
+      <h1 class="titulo-seccion">Este sendero no lleva a ningún sitio</h1>
+      <p class="mt-5 max-w-xl text-lg">Puede que el enlace esté mal o que la página se haya movido. Vuelve al inicio y elige tu próxima salida.</p>
+      <p class="mt-10"><a class="btn" href="/">Volver al inicio</a></p>
+    </div>
+    <svg class="error-sierra" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 120 L0 92 L80 70 L140 84 L230 34 L300 66 L360 52 L450 88 L540 30 L600 50 L690 6 L770 48 L830 36 L920 74 L1010 22 L1070 40 L1150 14 L1230 62 L1300 46 L1380 78 L1440 54 L1440 120 Z" />
+    </svg>
+  </section>
+</Base>
+
+<style>
+  .error-banda { position: relative; min-height: calc(85svh - var(--alto-cabecera)); display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+  .error-cuerpo { padding-block: 4rem 6rem; }
+  .error-cifra { margin-top: .5rem; font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: clamp(8rem, 40vw, 20rem); line-height: .8; color: var(--c-acento); }
+  .error-sierra { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: clamp(3rem, 8vw, 7rem); fill: var(--sima); }
+</style>

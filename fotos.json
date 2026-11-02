@@ -1,0 +1,72 @@
+[
+  {
+    "fichero": "fotos/hero.jpg",
+    "aspecto": "16:9",
+    "prompt": "Panorámica del macizo de la Maladeta en el Pirineo aragonés al amanecer de verano: crestas de granito con neveros, glaciar del Aneto al fondo, luz dorada rasante, primer plano de una arista rocosa con un sendero de piedra y una mochila de montaña naranja apoyada en una roca, cielo limpio, encuadre amplio con espacio libre a la izquierda, sin personas, sin texto, sin logotipos"
+  },
+  {
+    "fichero": "fotos/actividad-aneto.jpg",
+    "aspecto": "4:3",
+    "prompt": "Glaciar del Aneto en el Pirineo a primera hora de la mañana, huellas de crampones en la nieve dura subiendo hacia la cumbre, cordada marcada por una cuerda roja tendida sobre la nieve, cielo azul intenso, sin personas, sin texto, sin logotipos"
+  },
+  {
+    "fichero": "fotos/actividad-senderismo.jpg",
+    "aspecto": "4:3",
+    "prompt": "Sendero de montaña junto a un ibón de aguas verdes en el valle de Estós (Pirineo de Huesca) a media tarde de verano, prados con flores, bosque de pino negro y picos de roca al fondo, marcas de sendero pintadas en una piedra sin letras, sin personas, sin texto"
+  },
+  {
+    "fichero": "fotos/actividad-escalada.jpg",
+    "aspecto": "4:3",
+    "prompt": "Pared de roca caliza gris con una vía de escalada equipada, cuerda de escalada naranja pasando por las chapas y mosquetones, arnés y casco en el suelo al pie de la pared, luz de mañana lateral, valle pirenaico desenfocado al fondo, sin personas, sin texto, sin logotipos"
+  },
+  {
+    "fichero": "fotos/actividad-barranquismo.jpg",
+    "aspecto": "4:3",
+    "prompt": "Barranco acuático en el Pirineo con una cascada que cae a una poza de agua turquesa entre paredes de roca pulida, cuerda de rápel tendida por la roca mojada, luz filtrada de verano, sin personas, sin texto"
+  },
+  {
+    "fichero": "fotos/actividad-esqui.jpg",
+    "aspecto": "4:3",
+    "prompt": "Huella de subida de esquí de travesía en zigzag por una ladera de nieve virgen del Pirineo en invierno, unos esquís con pieles de foca y bastones clavados en la nieve en primer plano, cielo azul y crestas nevadas al fondo, sin personas, sin texto, sin logotipos"
+  },
+  {
+    "fichero": "fotos/actividad-raquetas.jpg",
+    "aspecto": "4:3",
+    "prompt": "Par de raquetas de nieve apoyadas en un tronco junto a un bosque de abetos nevado del Pirineo, huellas de raquetas que se pierden hacia un ibón helado, luz suave de invierno, sin personas, sin texto, sin logotipos"
+  },
+  {
+    "fichero": "fotos/guia-montana.jpg",
+    "aspecto": "3:4",
+    "prompt": "Material de guía de montaña ordenado sobre una losa de granito junto a un refugio de piedra del Pirineo: cuerda naranja enrollada, casco, piolet, crampones, mosquetones, brújula y un mapa topográfico sin texto legible, luz cálida de atardecer, picos al fondo desenfocados, sin personas, sin texto, sin logotipos"
+  },
+  {
+    "fichero": "fotos/galeria-1.jpg",
+    "aspecto": "16:9",
+    "prompt": "Mar de nubes visto desde una cumbre del Pirineo al amanecer, crestas oscuras que asoman entre la niebla, cielo naranja y rosado, sin personas, sin texto"
+  },
+  {
+    "fichero": "fotos/galeria-2.jpg",
+    "aspecto": "4:3",
+    "prompt": "Refugio de montaña de piedra y tejado de pizarra en un valle del Pirineo de Huesca al anochecer, ventanas con luz cálida, picos nevados al fondo, sin personas, sin texto ni carteles"
+  },
+  {
+    "fichero": "fotos/galeria-3.jpg",
+    "aspecto": "4:3",
+    "prompt": "Ibón de alta montaña de aguas oscuras que refleja una cresta de granito en un día de calma, piedras en la orilla, luz de mediodía, sin personas, sin texto"
+  },
+  {
+    "fichero": "fotos/galeria-4.jpg",
+    "aspecto": "4:3",
+    "prompt": "Bosque de hayas con colores de otoño en el valle de Benasque, sendero cubierto de hojas y niebla baja entre los troncos, sin personas, sin texto"
+  },
+  {
+    "fichero": "fotos/galeria-5.jpg",
+    "aspecto": "4:3",
+    "prompt": "Arista rocosa nevada del Pirineo en invierno con cornisas de nieve y cielo azul profundo, huellas que siguen el filo, sin personas, sin texto"
+  },
+  {
+    "fichero": "fotos/galeria-6.jpg",
+    "aspecto": "21:9",
+    "prompt": "Panorámica muy ancha del valle de Benasque desde lo alto en un atardecer de verano, el río Ésera serpenteando entre prados y bosques, montañas en capas azuladas hasta el horizonte, sin personas, sin texto"
+  }
+]

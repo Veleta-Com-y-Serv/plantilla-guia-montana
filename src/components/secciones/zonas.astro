@@ -1,0 +1,52 @@
+---
+// Zonas donde guía sobre roca con cresta: titular partido y lista a todo el ancho (2, 3 o 6 columnas) con un pico
+// naranja, el nombre grande y una línea de texto (`items: [{titulo, texto}]`). Debajo, el perfil de una sierra que
+// cruza la banda de borde a borde (decorativo). Los nombres salen también como `areaServed` en el JSON-LD.
+import { seccion, esExterno } from '../../data/site';
+import Seccion from '../ui/Seccion.astro';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const items = s?.items.filter((it) => it && it.titulo) ?? [];
+---
+
+{
+  s && (
+    <Seccion id={id} banda="roca" cresta="suave" class="zonas" sinContenedor>
+      <div class="contenedor">
+        <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} partido />
+        {items.length > 0 && (
+          <ul class="zon-lista">
+            {items.map((it) => (
+              <li class="zon">
+                <span class="zon-pico" aria-hidden="true" />
+                <h3 class="zon-titulo">{it.titulo}</h3>
+                {it.texto && <p class="zon-texto">{it.texto}</p>}
+              </li>
+            ))}
+          </ul>
+        )}
+        {s.cta && (
+          <p class="mt-10">
+            <a class="btn" href={s.cta.url} {...(esExterno(s.cta.url) ? { target: '_blank', rel: 'noopener' } : {})}>{s.cta.texto}</a>
+          </p>
+        )}
+      </div>
+      <svg class="zon-sierra" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 120 L0 92 L80 70 L140 84 L230 34 L300 66 L360 52 L450 88 L540 30 L600 50 L690 6 L770 48 L830 36 L920 74 L1010 22 L1070 40 L1150 14 L1230 62 L1300 46 L1380 78 L1440 54 L1440 120 Z" />
+      </svg>
+    </Seccion>
+  )
+}
+
+<style>
+  .zonas { padding-bottom: 0; overflow: hidden; }
+  .zon-lista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.25rem; }
+  @media (min-width: 900px) { .zon-lista { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 2rem; } }
+  .zon { padding-block: 1.4rem; border-top: 2px solid var(--linea); }
+  .zon-pico { display: block; width: 1.4rem; height: 1.1rem; background: var(--c-acento); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+  .zon-titulo { margin-top: .75rem; font-size: clamp(1.6rem, 3.2vw, 2.6rem); }
+  .zon-texto { margin-top: .35rem; font-size: .98rem; opacity: .8; }
+  .zon-sierra { display: block; width: 100%; height: clamp(4rem, 9vw, 8rem); margin-top: 3rem; fill: color-mix(in srgb, var(--c-primario) 22%, var(--c-fondo)); }
+</style>

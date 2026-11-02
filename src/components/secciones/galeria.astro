@@ -1,0 +1,55 @@
+---
+// Galería sobre pizarra con cresta: titular y mosaico de borde a borde con juntas finas. Cada seis fotos: dos en fila
+// (ancha y estrecha), tres iguales y una panorámica a todo el ancho; en móvil, de dos en dos con una ancha cada tres.
+// Campo: `galeria: [ruta…]` (con 6 o 12 fotos queda cerrada). `alt` = nombre del negocio + «, foto N».
+import { seccion } from '../../data/site';
+import { altGaleria } from '../../lib/seo';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const fotos = s?.galeria.filter(Boolean) ?? [];
+---
+
+{
+  s && fotos.length > 0 && (
+    <section id={id} class="banda-pizarra cresta galeria">
+      {(s.titulo || s.antetitulo || s.texto) && (
+        <div class="contenedor gal-cabeza">
+          <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} partido class="!mb-0" />
+        </div>
+      )}
+      <ul class="gal-mosaico">
+        {fotos.map((f, i) => (
+          <li class="gal-foto">
+            <Imagen src={f} alt={altGaleria(i)} ancho={1400} alto={900} class="h-full w-full object-cover" />
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+<style>
+  .galeria { padding-top: var(--ritmo); }
+  @media (min-width: 768px) { .galeria { padding-top: var(--ritmo-md); } }
+  .gal-cabeza { padding-bottom: 3rem; }
+  .gal-mosaico { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; background: var(--pizarra); }
+  .gal-foto { position: relative; aspect-ratio: 1; overflow: hidden; background: var(--c-primario); }
+  .gal-foto:nth-child(3n + 1) { grid-column: span 2; aspect-ratio: 16 / 9; }
+  .gal-foto :global(img) { transition: transform .7s ease; }
+  .gal-foto:hover :global(img) { transform: scale(1.04); }
+  @media (min-width: 768px) {
+    .gal-mosaico { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    .gal-foto, .gal-foto:nth-child(3n + 1) { grid-column: span 4; aspect-ratio: 4 / 3; }
+    .gal-foto:nth-child(6n + 1) { grid-column: span 7; aspect-ratio: auto; height: clamp(18rem, 34vw, 34rem); }
+    .gal-foto:nth-child(6n + 2) { grid-column: span 5; aspect-ratio: auto; height: clamp(18rem, 34vw, 34rem); }
+    .gal-foto:nth-child(6n) { grid-column: span 12; aspect-ratio: 21 / 8; }
+    /* Si la última no cierra la fila, ocupa lo que queda */
+    .gal-foto:last-child:nth-child(6n + 1) { grid-column: span 12; }
+    .gal-foto:last-child:nth-child(6n + 4) { grid-column: span 12; aspect-ratio: 21 / 8; }
+    .gal-foto:last-child:nth-child(6n + 5) { grid-column: span 8; }
+  }
+  @media (max-width: 767px) { .gal-foto:last-child:nth-child(3n + 2) { grid-column: span 2; aspect-ratio: 16 / 9; } }
+</style>

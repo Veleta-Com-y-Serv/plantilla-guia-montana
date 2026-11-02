@@ -1,0 +1,19 @@
+---
+// Titular de sección: antetítulo con la marca de sendero, título condensado grande y texto. Adaptado de AstroWind (Headline.astro), © onWidget, MIT.
+// `partido` pone el título a la izquierda y el texto a la derecha en escritorio (cabecera de banda ancha).
+interface Props { titulo?: string; antetitulo?: string; texto?: string; class?: string; nivel?: 1 | 2; partido?: boolean }
+const { titulo, antetitulo, texto, class: clase = '', nivel = 2, partido = false } = Astro.props;
+const H = nivel === 1 ? 'h1' : 'h2';
+---
+
+{
+  (titulo || antetitulo || texto) && (
+    <div class:list={['titular', { 'titular--partido': partido }, clase]}>
+      <div>
+        {antetitulo && <p class="antetitulo">{antetitulo}</p>}
+        {titulo && <H class="titulo-seccion">{titulo}</H>}
+      </div>
+      {texto && <p class="titular-texto">{texto}</p>}
+    </div>
+  )
+}

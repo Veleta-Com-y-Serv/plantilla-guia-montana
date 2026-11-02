@@ -1,0 +1,96 @@
+---
+// Actividades: banda roca con cresta arriba y titular partido; debajo, mosaico de borde a borde (1, 2 o 3 columnas)
+// con la foto alta a sangre y, pegada a ella, la ficha en pizarra: nivel con picos (1-3), título, texto y datos
+// (duración, temporada, precio). Campos: `actividades: [{titulo, texto, nivel, duracion, precio, temporada, imagen}]`;
+// `cta` opcional. Sin precio no hay precio; sin actividades solo sale el titular.
+import { seccion, escalones, esExterno } from '../../data/site';
+import { altFicha } from '../../lib/seo';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const lista = s?.actividades ?? [];
+---
+
+{
+  s && (
+    <section id={id} class="banda-roca cresta actividades">
+      <div class="contenedor act-cabeza">
+        <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} partido class="!mb-0" />
+      </div>
+      {lista.length > 0 && (
+        <ul class:list={['act-rejilla', `act-rejilla--${Math.min(lista.length, 3)}`]}>
+          {lista.map((a) => {
+            const n = escalones(a.nivel);
+            return (
+              <li class="act">
+                <div class="act-foto">
+                  {a.imagen ? (
+                    <Imagen src={a.imagen} alt={altFicha(a)} ancho={900} alto={1100} class="h-full w-full object-cover" />
+                  ) : (
+                    <span class="act-sinfoto" aria-hidden="true"><Icono nombre="montana" tam={64} /></span>
+                  )}
+                  {a.nivel && (
+                    <span class="act-nivel nivel dato">
+                      {n > 0 && (
+                        <span class="nivel-picos" aria-hidden="true">
+                          {[1, 2, 3].map((k) => <i class:list={{ lleno: k <= n }} />)}
+                        </span>
+                      )}
+                      {a.nivel}
+                    </span>
+                  )}
+                </div>
+                <div class="act-ficha">
+                  <h3 class="act-titulo">{a.titulo}</h3>
+                  {a.texto && <p class="act-texto">{a.texto}</p>}
+                  {(a.duracion || a.temporada) && (
+                    <ul class="act-datos dato">
+                      {a.duracion && <li><Icono nombre="reloj" tam={18} />{a.duracion}</li>}
+                      {a.temporada && <li><Icono nombre="calendario" tam={18} />{a.temporada}</li>}
+                    </ul>
+                  )}
+                  {a.precio && <p class="act-precio">{a.precio}</p>}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      {s.cta && (
+        <div class="contenedor act-pie">
+          <a class="btn" href={s.cta.url} {...(esExterno(s.cta.url) ? { target: '_blank', rel: 'noopener' } : {})}>{s.cta.texto}</a>
+        </div>
+      )}
+    </section>
+  )
+}
+
+<style>
+  .actividades { padding-block: var(--ritmo) 0; }
+  @media (min-width: 768px) { .actividades { padding-top: var(--ritmo-md); } }
+  .act-cabeza { padding-bottom: 3rem; }
+  .act-rejilla { display: grid; gap: 3px; background: var(--c-fondo); }
+  @media (min-width: 640px) { .act-rejilla--2, .act-rejilla--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1100px) { .act-rejilla--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .act { display: flex; flex-direction: column; background: var(--pizarra); color: var(--c-fondo); }
+  .act-foto { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--c-primario); }
+  @media (min-width: 640px) { .act-foto { aspect-ratio: 5 / 4; } }
+  .act-foto :global(img) { transition: transform .6s ease; }
+  .act:hover .act-foto :global(img) { transform: scale(1.04); }
+  .act-sinfoto { display: grid; place-items: center; height: 100%; color: color-mix(in srgb, var(--sobre-primario) 45%, transparent); }
+  .act-nivel { position: absolute; left: 0; bottom: 0; padding: .55rem .9rem .5rem 1rem; background: var(--pizarra); color: var(--c-fondo); }
+  .act-ficha { flex: 1; display: flex; flex-direction: column; padding: 1.4rem 1rem 1.75rem; }
+  @media (min-width: 768px) { .act-ficha { padding: 1.6rem 1.75rem 2rem; } }
+  .act-titulo { font-size: clamp(1.9rem, 3vw, 2.5rem); }
+  .act-texto { margin-top: .7rem; opacity: .82; }
+  .act-datos { margin-top: 1.1rem; display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; }
+  .act-datos li { display: inline-flex; align-items: center; gap: .4rem; }
+  .act-datos :global(svg) { color: var(--c-acento); }
+  .act-precio { margin-top: auto; padding-top: 1.1rem; font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: 1.45rem; line-height: 1.1; color: var(--c-acento); }
+  .act-pie { padding-block: 2.5rem var(--ritmo); }
+  @media (min-width: 768px) { .act-pie { padding-bottom: var(--ritmo-md); } }
+  .actividades:not(:has(.act-pie)) { padding-bottom: calc(var(--alto-cresta) + 1.5rem); }
+</style>

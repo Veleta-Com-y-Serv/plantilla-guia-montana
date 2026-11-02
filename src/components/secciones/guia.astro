@@ -1,0 +1,79 @@
+---
+// El guía (sobre mí): fila 50/50 a sangre. A la izquierda, la foto toca el borde de la ventana y su borde de arriba
+// es el perfil de una cresta; a la derecha, sobre niebla, titular, `texto` en primera persona (párrafos con línea en
+// blanco) y las titulaciones y seguros (`items: [{titulo, texto, icono}]`) con raya naranja. `cta` opcional.
+// Sin foto, el texto ocupa todo el ancho.
+import { seccion, parrafos, esExterno } from '../../data/site';
+import { altSeccion } from '../../lib/seo';
+import Imagen from '../ui/Imagen.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const items = s?.items.filter((it) => it && it.titulo) ?? [];
+---
+
+{
+  s && (
+    <section id={id} class:list={['banda-niebla guia', { 'guia--foto': s.imagen }]}>
+      {s.imagen && (
+        <div class="guia-foto">
+          <Imagen src={s.imagen} alt={altSeccion(s)} ancho={1200} alto={1400} class="h-full w-full object-cover" />
+        </div>
+      )}
+      <div class="guia-cuerpo">
+        <div class:list={['guia-interior', { contenedor: !s.imagen, mitad: s.imagen }]}>
+          {s.antetitulo && <p class="antetitulo">{s.antetitulo}</p>}
+          {s.titulo && <h2 class="titulo-seccion">{s.titulo}</h2>}
+          <div class="guia-texto">
+            {parrafos(s.texto).map((p) => <p>{p}</p>)}
+          </div>
+          {items.length > 0 && (
+            <ul class="guia-items">
+              {items.map((it) => (
+                <li class="guia-item">
+                  <Icono nombre={it.icono || 'check'} tam={26} class="guia-icono" />
+                  <div>
+                    <h3 class="guia-item-titulo">{it.titulo}</h3>
+                    {it.texto && <p class="guia-item-texto">{it.texto}</p>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+          {s.cta && (
+            <p class="mt-9">
+              <a class="btn" href={s.cta.url} {...(esExterno(s.cta.url) ? { target: '_blank', rel: 'noopener' } : {})}>{s.cta.texto}</a>
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .guia { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .guia-foto { position: relative; aspect-ratio: 4 / 3; background: var(--c-primario);
+    clip-path: polygon(0 6%, 9% 2%, 16% 5%, 27% 0, 38% 4%, 47% 1.5%, 58% 6%, 70% 1%, 81% 4.5%, 90% 2%, 100% 5%, 100% 100%, 0 100%); }
+  .guia-cuerpo { padding-block: var(--ritmo); }
+  .guia-interior { padding-inline: 1rem; }
+  .guia-texto { margin-top: 1.5rem; max-width: 40rem; display: grid; gap: 1rem; font-size: 1.12rem; }
+  .guia-items { margin-top: 2.5rem; display: grid; gap: 1.25rem; }
+  .guia-item { display: grid; grid-template-columns: auto 1fr; gap: .9rem; padding-left: 1rem; border-left: 4px solid var(--c-acento); }
+  .guia-item :global(.guia-icono) { color: var(--c-primario); margin-top: .1rem; }
+  .guia-item-titulo { font-size: 1.45rem; line-height: 1.05; }
+  .guia-item-texto { margin-top: .25rem; font-size: .98rem; opacity: .8; }
+  @media (min-width: 768px) {
+    .guia-cuerpo { padding-block: var(--ritmo-md); }
+    .guia-interior { padding-inline: 2rem; }
+    .guia-items { grid-template-columns: 1fr 1fr; gap: 1.75rem 2rem; }
+  }
+  @media (min-width: 1024px) {
+    .guia--foto { grid-template-columns: 1fr 1fr; }
+    .guia-foto { aspect-ratio: auto; min-height: 100%; }
+    .guia--foto .guia-interior { max-width: 45rem; padding-inline: clamp(2rem, 5vw, 5rem) 2rem; }
+    .guia--foto .guia-items { grid-template-columns: 1fr; }
+  }
+  @media (min-width: 1280px) { .guia--foto .guia-items { grid-template-columns: 1fr 1fr; } }
+</style>

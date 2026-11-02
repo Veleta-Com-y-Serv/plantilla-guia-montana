@@ -1,0 +1,101 @@
+---
+// Pie a todo el ancho sobre «sima» (casi negro verdoso) con el perfil de cresta arriba y curvas de nivel: marca y
+// redes, contacto, la web y la próxima salida (la primera con plazas de «salidas») con el horario.
+// En móvil añade la barra fija «Llamar / WhatsApp» (teléfono y WhatsApp de site.yaml; sin ninguno no sale).
+// «Web creada con NoExpertise» se muestra si site.yaml → marca_pie no es false.
+import { site, tel, mapa, whatsapp, proximaSalida } from '../data/site';
+import Icono from './ui/Icono.astro';
+interface Props { variante?: string }
+const { variante = 'cumbre' } = Astro.props;
+const c = site.contacto;
+const redes = Object.entries(site.redes).filter(([, url]) => url);
+const anio = new Date().getFullYear();
+const proxima = proximaSalida();
+const hayContacto = c.telefono || c.whatsapp || c.email || c.direccion;
+const wa = whatsapp(c.whatsapp, `Hola, escribo desde la web de ${site.nombre}.`);
+---
+
+<footer class={`pie pie--${variante} cresta curvas`}>
+  <div class="pie-cuerpo">
+    <div class="contenedor pie-rejilla">
+      <div class="pie-marca">
+        <p class="pie-nombre">{site.nombre}</p>
+        {site.eslogan && <p class="pie-eslogan">{site.eslogan}</p>}
+        {
+          redes.length > 0 && (
+            <ul class="pie-redes">
+              {redes.map(([red, url]) => (
+                <li>
+                  <a href={url} rel="noopener" target="_blank" aria-label={red}>
+                    <Icono nombre={red} tam={20} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+      {
+        hayContacto && (
+          <div>
+            <p class="pie-titulo">Contacto</p>
+            <ul class="pie-lista">
+              {c.telefono && <li><a href={tel(c.telefono)}>{c.telefono}</a></li>}
+              {wa && <li><a href={wa} rel="noopener" target="_blank">WhatsApp</a></li>}
+              {c.email && <li><a class="break-all" href={`mailto:${c.email}`}>{c.email}</a></li>}
+              {c.direccion && <li><a href={mapa(c.direccion)} rel="noopener" target="_blank">{c.direccion}</a></li>}
+            </ul>
+          </div>
+        )
+      }
+      {
+        site.menu.length > 0 && (
+          <div>
+            <p class="pie-titulo">Web</p>
+            <ul class="pie-lista">
+              {site.menu.map((e) => <li><a href={e.url}>{e.texto}</a></li>)}
+            </ul>
+          </div>
+        )
+      }
+      {
+        (proxima || c.horario) && (
+          <div>
+            {proxima && (
+              <>
+                <p class="pie-titulo">Próxima salida</p>
+                <a class="pie-proxima" href={`#${proxima.ancla}`}>{proxima.fecha}</a>
+                <p class="opacity-80">{[proxima.titulo, proxima.lugar].filter(Boolean).join(' · ')}</p>
+              </>
+            )}
+            {c.horario && <p class:list={['text-sm opacity-70', { 'mt-5': proxima }]}>{c.horario}</p>}
+          </div>
+        )
+      }
+    </div>
+    <div class="contenedor pie-legal">
+      <span>© {anio} {site.nombre}</span>
+      <a href="/aviso-legal">Aviso legal y privacidad</a>
+      {
+        site.marca_pie && (
+          <span class="pie-noexpertise">
+            Web creada con <a href="https://noexpertise.com" rel="noopener">NoExpertise</a>
+          </span>
+        )
+      }
+    </div>
+  </div>
+  {
+    (c.telefono || wa) && (
+      <nav class="barra-movil" aria-label="Contacto rápido">
+        {c.telefono && <a class="barra-llamar" href={tel(c.telefono)}><Icono nombre="telefono" tam={20} />Llamar</a>}
+        {wa && <a class="barra-whatsapp" href={wa} rel="noopener" target="_blank"><Icono nombre="whatsapp" tam={20} />WhatsApp</a>}
+      </nav>
+    )
+  }
+</footer>
+
+<style>
+  .pie-proxima { display: block; font-family: var(--fuente-titulos); font-stretch: 75%; font-weight: 700; font-size: 2.1rem; line-height: 1; color: var(--c-acento); text-decoration: none; }
+  .pie-proxima:hover { text-decoration: underline; }
+</style>
