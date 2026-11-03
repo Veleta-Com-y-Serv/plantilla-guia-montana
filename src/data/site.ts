@@ -1,6 +1,7 @@
 // Carga ../../site.yaml en el build y lo expone tipado.
 // Es la única fuente de contenido: textos, colores, contacto, menú y secciones.
 import datos from '../../site.yaml';
+import { conPaginas } from '../lib/multipagina';
 
 export interface Enlace { texto: string; url: string }
 /** Elemento genérico: señales de la portada, titulaciones, material, zonas, pasos de la reserva… */
@@ -55,7 +56,7 @@ export interface Site {
 }
 
 type Crudo = Record<string, any>;
-const d = (datos ?? {}) as Crudo;
+const d = conPaginas((datos ?? {}) as Crudo);
 function lista<T>(v: unknown): T[] {
   return Array.isArray(v) ? (v.filter(Boolean) as T[]) : [];
 }

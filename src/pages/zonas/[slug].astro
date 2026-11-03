@@ -13,6 +13,7 @@ import { escalones, seccion, site, tel, whatsapp } from '../../data/site';
 import { enlaceDe, introZona, resumen, tituloZona, zonasConPagina } from '../../lib/paginas';
 import type { Zona } from '../../lib/paginas';
 import { jsonLdMigas, jsonLdZona, urlBase } from '../../lib/seo';
+import { enlace, rutaDeSeccion } from '../../lib/multipagina';
 
 export function getStaticPaths() {
   return zonasConPagina().map((z) => ({ params: { slug: z.slug }, props: { z } }));
@@ -26,14 +27,14 @@ const intro = introZona(z);
 const nombreSeccion = String(z.seccion.antetitulo || z.seccion.titulo || 'Zonas').trim();
 const migas = [
   { nombre: 'Inicio', ruta: '/' },
-  { nombre: nombreSeccion, ruta: `/#${z.idSeccion}` },
+  { nombre: nombreSeccion, ruta: rutaDeSeccion(z.idSeccion) },
   { nombre: z.nombre, ruta: z.url },
 ];
 const c = site.contacto;
 const foto = z.imagen || String(z.seccion.imagen || '');
 const actividades = seccion('actividades');
 const lista = actividades ? actividades.actividades.filter((a) => a?.titulo) : [];
-const reserva = seccion('reserva') ? '/#reserva' : site.boton_cabecera?.url || '/#contacto';
+const reserva = seccion('reserva') ? enlace('/#reserva') : site.boton_cabecera?.url || enlace('/#contacto');
 const textoReserva = 'Reserva tu salida';
 const wa = whatsapp(c.whatsapp, `Hola, quiero información sobre una salida por ${z.nombre}`);
 const otras = zonasConPagina().filter((x) => x !== z);
